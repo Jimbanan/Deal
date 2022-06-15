@@ -1,6 +1,6 @@
 package com.neoflex.deal.enums;
 
 public enum MaritalStatus {
-    MARRIED_MARRIED,
+    MARRIED,
     DIVORCED
 }

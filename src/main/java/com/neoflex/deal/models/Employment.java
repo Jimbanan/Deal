@@ -30,7 +30,7 @@ public class Employment {
     private BigDecimal salary;// (зарплата)
 
     @Column
-    private String EmployerINN;
+    private String employerINN;
 
     @Column
     @Enumerated(EnumType.STRING)

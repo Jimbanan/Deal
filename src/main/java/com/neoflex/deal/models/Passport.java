@@ -21,20 +21,20 @@ public class Passport {
     private Long id;
 
     @Column
-    private String passportSeries;
+    private String series;
 
     @Column
-    private String passportNumber;
+    private String number;
 
     @Column
-    private LocalDate passportIssueDate;
+    private LocalDate issueDate;
 
     @Column
-    private String passportIssueBranch;
+    private String issueBranch;
 
-    public Passport(String passportSeries, String passportNumber) {
-        this.passportSeries = passportSeries;
-        this.passportNumber = passportNumber;
+    public Passport(String series, String number) {
+        this.series = series;
+        this.number = number;
     }
 
     //------------------------------------FOREIGN ENTITIES

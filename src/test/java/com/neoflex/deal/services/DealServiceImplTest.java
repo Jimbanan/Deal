@@ -108,7 +108,7 @@ class DealServiceImplTest {
 
         ScoringDataDTO scoringDataDTO = dealService.createScoringDataDTO(FinishRegistrationRequestDTO.builder()
                 .genders(Genders.MALE)
-                .maritalStatus(MaritalStatus.MARRIED_MARRIED)
+                .maritalStatus(MaritalStatus.MARRIED)
                 .dependentAmount(1)
                 .passportIssueDate(LocalDate.of(2002, 9, 29))
                 .passportIssueBrach("ТЕСТ")
@@ -203,7 +203,7 @@ class DealServiceImplTest {
         Long count = employmentRepository.count();
         dealService.saveEmployment(FinishRegistrationRequestDTO.builder()
                 .genders(Genders.MALE)
-                .maritalStatus(MaritalStatus.MARRIED_MARRIED)
+                .maritalStatus(MaritalStatus.MARRIED)
                 .dependentAmount(1)
                 .passportIssueDate(LocalDate.of(2002, 9, 29))
                 .passportIssueBrach("ТЕСТ")

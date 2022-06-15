@@ -73,13 +73,12 @@ public class DealServiceImpl implements DealService {
 
     @Override
     public Long addClient(LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        log.info("addClient() - Long: {}", saveApplication(saveClient(loanApplicationRequestDTO, savePassport(loanApplicationRequestDTO)), Status.PREAPPROVAL));
+        log.info("addClient() - Long: Добавление клиента");
         Application application = saveApplication(saveClient(loanApplicationRequestDTO, savePassport(loanApplicationRequestDTO)), Status.PREAPPROVAL);
         return application.getId();
     }
     @Override
     public void addOffer(LoanOfferDTO loanOfferDTO) {
-
         Application application = getApplication(loanOfferDTO.getApplicationId());
         application.setCredit(addCredit(loanOfferDTO, addAddServices(loanOfferDTO)));
         application.setAppliedOffer(loanOfferDTO.getApplicationId());
@@ -95,8 +94,8 @@ public class DealServiceImpl implements DealService {
         application.getClient().setGender(finishRegistrationRequestDTO.getGenders());
         application.getClient().setMaritalStatus(finishRegistrationRequestDTO.getMaritalStatus());
         application.getClient().setDependentAmount(finishRegistrationRequestDTO.getDependentAmount());
-        application.getClient().getPassport().setPassportIssueDate(finishRegistrationRequestDTO.getPassportIssueDate());
-        application.getClient().getPassport().setPassportIssueBranch(finishRegistrationRequestDTO.getPassportIssueBrach());
+        application.getClient().getPassport().setIssueDate(finishRegistrationRequestDTO.getPassportIssueDate());
+        application.getClient().getPassport().setIssueBranch(finishRegistrationRequestDTO.getPassportIssueBrach());
         application.getClient().setEmployment(saveEmployment(finishRegistrationRequestDTO));
         application.getClient().setAccount(finishRegistrationRequestDTO.getAccount());
         updateApplication(application);
@@ -110,10 +109,10 @@ public class DealServiceImpl implements DealService {
                 .middleName(application.getClient().getMiddleName())
                 .gender(application.getClient().getGender())
                 .birthdate(application.getClient().getBirthdate())
-                .passportSeries(application.getClient().getPassport().getPassportSeries())
-                .passportNumber(application.getClient().getPassport().getPassportNumber())
-                .passportIssueDate(application.getClient().getPassport().getPassportIssueDate())
-                .passportIssueBranch(application.getClient().getPassport().getPassportIssueBranch())
+                .passportSeries(application.getClient().getPassport().getSeries())
+                .passportNumber(application.getClient().getPassport().getNumber())
+                .passportIssueDate(application.getClient().getPassport().getIssueDate())
+                .passportIssueBranch(application.getClient().getPassport().getIssueBranch())
                 .maritalStatus(application.getClient().getMaritalStatus())
                 .dependentAmount(application.getClient().getDependentAmount())
                 .employment(finishRegistrationRequestDTO.getEmployment())
@@ -200,7 +199,7 @@ public class DealServiceImpl implements DealService {
         log.info("saveEmployment() - Employment: Информация о Employment добавлена в БД");
         return employmentRepository.save(Employment.builder()
                 .employmentStatus(finishRegistrationRequestDTO.getEmployment().getEmploymentStatus())
-                .EmployerINN(finishRegistrationRequestDTO.getEmployment().getEmployerINN())
+                .employerINN(finishRegistrationRequestDTO.getEmployment().getEmployerINN())
                 .salary(finishRegistrationRequestDTO.getEmployment().getSalary())
                 .position(finishRegistrationRequestDTO.getEmployment().getPosition())
                 .workExperienceTotal(finishRegistrationRequestDTO.getEmployment().getWorkExperienceTotal())
@@ -227,7 +226,7 @@ public class DealServiceImpl implements DealService {
     }
 
     public AddServices addAddServices(LoanOfferDTO loanOfferDTO) {
-        log.info("addAddServices() - Add_services: Информация о Add_services добавлена в БД");
+        log.info("addAddServices() - AddServices: Информация о Add_services добавлена в БД");
         return addServesRepository.save(AddServices.builder()
                 .isInsuranceEnabled(loanOfferDTO.getIsInsuranceEnabled())
                 .isSalaryClient(loanOfferDTO.getIsSalaryClient())
