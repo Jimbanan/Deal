@@ -1,10 +1,7 @@
-package com.neoflex.deal.models.client;
+package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.Genders;
 import com.neoflex.deal.enums.MaritalStatus;
-import com.neoflex.deal.models.application.Application;
-import com.neoflex.deal.models.employment.Employment;
-import com.neoflex.deal.models.passport.Passport;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

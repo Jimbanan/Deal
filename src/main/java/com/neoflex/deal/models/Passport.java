@@ -1,6 +1,5 @@
-package com.neoflex.deal.models.passport;
+package com.neoflex.deal.models;
 
-import com.neoflex.deal.models.client.Client;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

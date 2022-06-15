@@ -1,4 +1,4 @@
-package com.neoflex.deal.models.paymentSchedule;
+package com.neoflex.deal.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

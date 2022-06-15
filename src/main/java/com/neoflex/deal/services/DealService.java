@@ -2,13 +2,13 @@ package com.neoflex.deal.services;
 
 import com.neoflex.deal.dto.*;
 import com.neoflex.deal.enums.Status;
-import com.neoflex.deal.models.add_services.AddServices;
-import com.neoflex.deal.models.application.Application;
-import com.neoflex.deal.models.applicationStatusHistory.ApplicationStatusHistory;
-import com.neoflex.deal.models.client.Client;
-import com.neoflex.deal.models.credit.Credit;
-import com.neoflex.deal.models.employment.Employment;
-import com.neoflex.deal.models.passport.Passport;
+import com.neoflex.deal.models.AddServices;
+import com.neoflex.deal.models.Application;
+import com.neoflex.deal.models.ApplicationStatusHistory;
+import com.neoflex.deal.models.Client;
+import com.neoflex.deal.models.Credit;
+import com.neoflex.deal.models.Employment;
+import com.neoflex.deal.models.Passport;
 
 public interface DealService {
 

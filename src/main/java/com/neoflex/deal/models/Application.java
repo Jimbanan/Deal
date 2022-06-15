@@ -1,9 +1,6 @@
-package com.neoflex.deal.models.application;
+package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.Status;
-import com.neoflex.deal.models.applicationStatusHistory.ApplicationStatusHistory;
-import com.neoflex.deal.models.client.Client;
-import com.neoflex.deal.models.credit.Credit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,8 +1,7 @@
-package com.neoflex.deal.models.employment;
+package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.EmploymentStatus;
 import com.neoflex.deal.enums.Position;
-import com.neoflex.deal.models.client.Client;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

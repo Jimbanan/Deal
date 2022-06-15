@@ -1,4 +1,4 @@
-package com.neoflex.deal.models.applicationStatusHistory;
+package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.Status;
 import lombok.AllArgsConstructor;

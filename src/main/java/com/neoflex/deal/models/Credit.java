@@ -1,9 +1,6 @@
-package com.neoflex.deal.models.credit;
+package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.CreditStatus;
-import com.neoflex.deal.models.add_services.AddServices;
-import com.neoflex.deal.models.application.Application;
-import com.neoflex.deal.models.paymentSchedule.PaymentSchedule;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,5 @@
-package com.neoflex.deal.models.add_services;
+package com.neoflex.deal.models;
 
-import com.neoflex.deal.models.credit.Credit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
