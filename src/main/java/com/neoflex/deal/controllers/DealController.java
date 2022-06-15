@@ -2,6 +2,7 @@ package com.neoflex.deal.controllers;
 
 import com.neoflex.deal.dto.*;
 import com.neoflex.deal.services.ApplicationServiceImpl;
+import com.neoflex.deal.services.CreditServiceImpl;
 import com.neoflex.deal.services.DealServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,6 +25,9 @@ public class DealController {
     @Autowired
     ApplicationServiceImpl applicationService;
 
+    @Autowired
+    CreditServiceImpl creditServiceImpl;
+
     RestTemplate restTemplate = new RestTemplate();
 
     @Value("${conveyor.hostname}")
@@ -40,7 +44,7 @@ public class DealController {
     @PutMapping("/offer")
     @Operation(description = "Добавление полученного офера в БД")
     public void offers(@RequestBody LoanOfferDTO loanOfferDTO) {
-        applicationService.addOffer(loanOfferDTO);
+        applicationService.addApplicationOffer(loanOfferDTO);
     }
 
     @PutMapping("/calculate/{applicationId}")
@@ -51,7 +55,7 @@ public class DealController {
         ScoringDataDTO scoringDataDTO = dealService.createScoringDataDTO(finishRegistrationRequestDTO, applicationId);
         String uri_Calculate = hostname + "/conveyor/calculation";
         CreditDTO creditDTO = restTemplate.postForObject(uri_Calculate, scoringDataDTO, CreditDTO.class);
-        dealService.updateCredit(creditDTO, applicationId);
+        creditServiceImpl.updateCredit(creditDTO, applicationId);
     }
 
 

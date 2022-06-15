@@ -11,9 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -21,6 +24,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
 
+    private final ApplicationStatusHistoryRepository applicationStatusHistoryRepository;
     private final ApplicationRepository applicationRepository;
 
     @Override
@@ -57,7 +61,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public void addOffer(LoanOfferDTO loanOfferDTO) {
+    public void addApplicationOffer(LoanOfferDTO loanOfferDTO) {
         Application application = getApplication(loanOfferDTO.getApplicationId());
 
         AddServices addServices = AddServices.builder()
@@ -92,6 +96,27 @@ public class ApplicationServiceImpl implements ApplicationService {
     public void updateApplication(Application application) {
         applicationRepository.save(application);
         log.info("updateApplication() - void: Информация о Application обновлена в БД");
+    }
+
+    @Transactional
+    public void updateApplication(Application application, Status status) {
+        List<ApplicationStatusHistory> list = new ArrayList<>();
+        list.add(addApplicationStatusHistory(status));
+
+        application.getStatusHistory().add(list.get(0));
+        log.info("updateApplication() - void: Информация о application.statusHistory добавлена");
+
+        applicationRepository.save(application);
+        log.info("updateApplication() - void: Информация о Application обновлена в БД");
+    }
+
+
+    public ApplicationStatusHistory addApplicationStatusHistory(Status status) {
+        log.info("addApplicationStatusHistory() - ApplicationStatusHistory: Информация о ApplicationStatusHistory добавлена в БД");
+        return applicationStatusHistoryRepository.save(ApplicationStatusHistory.builder()
+                .status(status)
+                .time(LocalDateTime.now())
+                .build());
     }
 
 }
