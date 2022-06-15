@@ -45,7 +45,6 @@ class DealServiceImplTest {
 
         ReflectionTestUtils.setField(dealServiceImpl, "applicationServiceImpl", applicationServiceImpl);
 
-
         Assertions.assertNotNull(dealServiceImpl.createScoringDataDTO(FinishRegistrationRequestDTO.builder()
                 .genders(Genders.MALE)
                 .maritalStatus(MaritalStatus.MARRIED)
