@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequestMapping(("/deal"))
 @RestController
-@Tag(name = "ConveyorController", description = "Кредитный конвейер")
+@Tag(name = "DealController", description = "Кредитный конвейер")
 public class DealController {
 
     @Autowired
