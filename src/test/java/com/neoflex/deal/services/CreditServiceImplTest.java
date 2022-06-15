@@ -46,40 +46,40 @@ class CreditServiceImplTest {
 
     @Test
     void updateCredit() {
-//        ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
-//        ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
-//
-//        ReflectionTestUtils.setField(paymentScheduleImpl, "paymentScheduleRepository", paymentScheduleRepository);
-//
-//        ReflectionTestUtils.setField(creditServiceImpl, "applicationServiceImpl", applicationServiceImpl);
-//        ReflectionTestUtils.setField(creditServiceImpl, "paymentScheduleImpl", paymentScheduleImpl);
-//
-//        Long countPaymentScheduleRepository = paymentScheduleRepository.count();
-//
-//        Long id = applicationRepository.findTopByOrderByIdDesc().getId();
-//
-//        creditServiceImpl.updateCredit(CreditDTO.builder()
-//                .amount(BigDecimal.valueOf(100000))
-//                .term(6)
-//                .monthlyPayment(BigDecimal.valueOf(100000))
-//                .rate(BigDecimal.valueOf(10))
-//                .psk(BigDecimal.valueOf(10))
-//                .isInsuranceEnabled(true)
-//                .isSalaryClient(true)
-//                .paymentSchedule(Arrays.asList(PaymentScheduleElement.builder()
-//                        .number(1)
-//                        .date(LocalDate.now())
-//                        .totalPayment(BigDecimal.valueOf(10000))
-//                        .interestPayment(BigDecimal.valueOf(10000))
-//                        .debtPayment(BigDecimal.valueOf(10000))
-//                        .remainingDebt(BigDecimal.valueOf(10000)).build())).build(), id);
-//
-//        Assertions.assertEquals(paymentScheduleRepository.count(), countPaymentScheduleRepository + 1);
-//
-//        Application application = applicationServiceImpl.getApplication(id);
-//
-//        Assertions.assertEquals(application.getId(), id);
-//        Assertions.assertEquals(application.getStatus(), Status.APPROVED);
+        ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
+        ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
+
+        ReflectionTestUtils.setField(paymentScheduleImpl, "paymentScheduleRepository", paymentScheduleRepository);
+
+        ReflectionTestUtils.setField(creditServiceImpl, "applicationServiceImpl", applicationServiceImpl);
+        ReflectionTestUtils.setField(creditServiceImpl, "paymentScheduleImpl", paymentScheduleImpl);
+
+        Long countPaymentScheduleRepository = paymentScheduleRepository.count();
+
+        Long id = applicationRepository.findTopByOrderByIdDesc().getId();
+
+        creditServiceImpl.updateCredit(CreditDTO.builder()
+                .amount(BigDecimal.valueOf(100000))
+                .term(6)
+                .monthlyPayment(BigDecimal.valueOf(100000))
+                .rate(BigDecimal.valueOf(10))
+                .psk(BigDecimal.valueOf(10))
+                .isInsuranceEnabled(true)
+                .isSalaryClient(true)
+                .paymentSchedule(Arrays.asList(PaymentScheduleElement.builder()
+                        .number(1)
+                        .date(LocalDate.now())
+                        .totalPayment(BigDecimal.valueOf(10000))
+                        .interestPayment(BigDecimal.valueOf(10000))
+                        .debtPayment(BigDecimal.valueOf(10000))
+                        .remainingDebt(BigDecimal.valueOf(10000)).build())).build(), id);
+
+        Assertions.assertEquals(paymentScheduleRepository.count(), countPaymentScheduleRepository + 1);
+
+        Application application = applicationServiceImpl.getApplication(id);
+
+        Assertions.assertEquals(application.getId(), id);
+        Assertions.assertEquals(application.getStatus(), Status.APPROVED);
 
     }
 }
