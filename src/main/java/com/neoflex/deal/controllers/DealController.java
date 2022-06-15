@@ -6,7 +6,6 @@ import com.neoflex.deal.services.CreditServiceImpl;
 import com.neoflex.deal.services.DealServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,19 +18,19 @@ import java.util.List;
 @Tag(name = "DealController", description = "Кредитный конвейер")
 public class DealController {
 
-    @Autowired
-    DealServiceImpl dealService;
-
-    @Autowired
-    ApplicationServiceImpl applicationService;
-
-    @Autowired
-    CreditServiceImpl creditServiceImpl;
-
-    RestTemplate restTemplate = new RestTemplate();
+    private final DealServiceImpl dealService;
+    private final ApplicationServiceImpl applicationService;
+    private final CreditServiceImpl creditServiceImpl;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${conveyor.hostname}")
     String hostname;
+
+    public DealController(DealServiceImpl dealService, ApplicationServiceImpl applicationService, CreditServiceImpl creditServiceImpl) {
+        this.dealService = dealService;
+        this.applicationService = applicationService;
+        this.creditServiceImpl = creditServiceImpl;
+    }
 
     @PostMapping("/application")
     @Operation(description = "Формирование списка кредитных предложение + Добавление первичных данных в БД")

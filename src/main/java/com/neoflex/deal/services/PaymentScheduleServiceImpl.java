@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PaymentScheduleImpl implements PaymentSchedules {
+public class PaymentScheduleServiceImpl implements PaymentSchedulesService {
 
     private final PaymentScheduleRepository paymentScheduleRepository;
 

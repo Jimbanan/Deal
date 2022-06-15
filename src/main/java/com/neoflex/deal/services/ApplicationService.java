@@ -16,4 +16,5 @@ public interface ApplicationService {
     void updateApplication(Application application);
 
     void updateApplication(Application application, Status status);
+
 }

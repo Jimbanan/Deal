@@ -17,15 +17,17 @@ import java.util.List;
 public class CreditServiceImpl implements CreditService {
 
     private final ApplicationServiceImpl applicationServiceImpl;
-    private final PaymentScheduleImpl paymentScheduleImpl;
+    private final PaymentScheduleServiceImpl paymentScheduleImpl;
 
     @Override
     public void updateCredit(CreditDTO creditDTO, Long applicationId) {
+
+        System.out.println(creditDTO);
+
         List<PaymentSchedule> paymentSchedules = new ArrayList<>();
         log.info("updateCredit() - void:  List<PaymentSchedule> paymentSchedules - Создан");
 
         for (int i = 0; i < creditDTO.getPaymentSchedule().size(); i++) {
-
             PaymentSchedule paymentSchedule = PaymentSchedule.builder()
                     .number(creditDTO.getPaymentSchedule().get(i).getNumber())
                     .date(creditDTO.getPaymentSchedule().get(i).getDate())

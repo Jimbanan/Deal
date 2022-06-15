@@ -6,7 +6,6 @@ import com.neoflex.deal.enums.CreditStatus;
 import com.neoflex.deal.enums.Status;
 import com.neoflex.deal.models.*;
 import com.neoflex.deal.repository.ApplicationRepository;
-import com.neoflex.deal.repository.ApplicationStatusHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,8 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
 
-    private final ApplicationStatusHistoryRepository applicationStatusHistoryRepository;
     private final ApplicationRepository applicationRepository;
+    private final ApplicationStatusHistoryServiceImpl applicationStatusHistoryServiceImpl;
 
     @Override
     public Long addApplication(LoanApplicationRequestDTO loanApplicationRequestDTO) {
@@ -101,22 +100,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Transactional
     public void updateApplication(Application application, Status status) {
         List<ApplicationStatusHistory> list = new ArrayList<>();
-        list.add(addApplicationStatusHistory(status));
+        list.add(applicationStatusHistoryServiceImpl.addApplicationStatusHistory(status));
 
         application.getStatusHistory().add(list.get(0));
         log.info("updateApplication() - void: Информация о application.statusHistory добавлена");
 
         applicationRepository.save(application);
         log.info("updateApplication() - void: Информация о Application обновлена в БД");
-    }
-
-
-    public ApplicationStatusHistory addApplicationStatusHistory(Status status) {
-        log.info("addApplicationStatusHistory() - ApplicationStatusHistory: Информация о ApplicationStatusHistory добавлена в БД");
-        return applicationStatusHistoryRepository.save(ApplicationStatusHistory.builder()
-                .status(status)
-                .time(LocalDateTime.now())
-                .build());
     }
 
 }
