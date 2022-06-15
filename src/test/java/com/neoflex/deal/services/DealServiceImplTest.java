@@ -27,6 +27,7 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -260,5 +261,16 @@ class DealServiceImplTest {
         dealService.addCredit(LoanOfferDTO.builder().build(),
                 Add_services.builder().build());
         Assertions.assertEquals(creditRepository.count(), count + 1);
+    }
+
+    @Test
+    void test() {
+        List<Client> all = clientRepository.findAll();
+
+        System.out.println(all.size());
+
+        for (Client client : all) {
+            System.out.println(client.getId());
+        }
     }
 }
