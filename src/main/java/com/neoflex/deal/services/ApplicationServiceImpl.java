@@ -26,6 +26,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final ApplicationStatusHistoryServiceImpl applicationStatusHistoryServiceImpl;
 
+
     @Override
     public Long addApplication(LoanApplicationRequestDTO loanApplicationRequestDTO) {
         log.info("addClient() - Long: Добавление клиента");

@@ -1,21 +1,27 @@
 package com.neoflex.deal.services;
 
 import com.neoflex.deal.dto.*;
+import com.neoflex.deal.feignclient.ConveyorMC;
 import com.neoflex.deal.models.Application;
 import com.neoflex.deal.models.Employment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class DealServiceImpl implements DealService {
 
-    ApplicationServiceImpl applicationServiceImpl;
+    private final ApplicationServiceImpl applicationServiceImpl;
+    private final ConveyorMC conveyorMC;
 
     @Autowired
-    public DealServiceImpl(ApplicationServiceImpl applicationServiceImpl) {
+    public DealServiceImpl(ApplicationServiceImpl applicationServiceImpl,
+                           ConveyorMC conveyorMC) {
         this.applicationServiceImpl = applicationServiceImpl;
+        this.conveyorMC = conveyorMC;
     }
 
     @Override
@@ -60,6 +66,14 @@ public class DealServiceImpl implements DealService {
                 .isInsuranceEnabled(application.getCredit().getAddServices().getIsInsuranceEnabled())
                 .isSalaryClient(application.getCredit().getAddServices().getIsSalaryClient())
                 .build();
+    }
+
+    public List<LoanOfferDTO> getOffersList(LoanApplicationRequestDTO loanApplicationRequestDTO) {
+        return conveyorMC.getOffersListConveyor(loanApplicationRequestDTO);
+    }
+
+    public CreditDTO offerConfirm(ScoringDataDTO scoringDataDTO) {
+        return conveyorMC.offerConfirmConveyor(scoringDataDTO);
     }
 
 }

@@ -6,9 +6,7 @@ import com.neoflex.deal.services.CreditServiceImpl;
 import com.neoflex.deal.services.DealServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,10 +19,6 @@ public class DealController {
     private final DealServiceImpl dealService;
     private final ApplicationServiceImpl applicationService;
     private final CreditServiceImpl creditServiceImpl;
-    private final RestTemplate restTemplate = new RestTemplate();
-
-    @Value("${conveyor.hostname}")
-    String hostname;
 
     public DealController(DealServiceImpl dealService, ApplicationServiceImpl applicationService, CreditServiceImpl creditServiceImpl) {
         this.dealService = dealService;
@@ -36,8 +30,7 @@ public class DealController {
     @Operation(description = "Формирование списка кредитных предложение + Добавление первичных данных в БД")
     public List<LoanOfferDTO> offersDeal(@Valid @RequestBody LoanApplicationRequestDTO loanApplicationRequestDTO) {
         loanApplicationRequestDTO.setApplicationId(applicationService.addApplication(loanApplicationRequestDTO));
-        String uri_Offers = hostname + "/conveyor/offers";
-        return restTemplate.postForObject(uri_Offers, loanApplicationRequestDTO, List.class);
+        return dealService.getOffersList(loanApplicationRequestDTO);
     }
 
     @PutMapping("/offer")
@@ -52,8 +45,7 @@ public class DealController {
                           @PathVariable Long applicationId) {
 
         ScoringDataDTO scoringDataDTO = dealService.createScoringDataDTO(finishRegistrationRequestDTO, applicationId);
-        String uri_Calculate = hostname + "/conveyor/calculation";
-        CreditDTO creditDTO = restTemplate.postForObject(uri_Calculate, scoringDataDTO, CreditDTO.class);
+        CreditDTO creditDTO = dealService.offerConfirm(scoringDataDTO);
         creditServiceImpl.updateCredit(creditDTO, applicationId);
     }
 
