@@ -11,8 +11,8 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "Сущность графика платежей")
 public class PaymentScheduleElement {
 

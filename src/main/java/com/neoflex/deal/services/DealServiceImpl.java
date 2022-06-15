@@ -1,22 +1,15 @@
 package com.neoflex.deal.services;
 
 import com.neoflex.deal.dto.*;
-import com.neoflex.deal.enums.CreditStatus;
 import com.neoflex.deal.enums.Status;
 import com.neoflex.deal.repository.AddServicesRepository;
-import com.neoflex.deal.models.AddServices;
 import com.neoflex.deal.models.Application;
 import com.neoflex.deal.repository.ApplicationRepository;
 import com.neoflex.deal.models.ApplicationStatusHistory;
 import com.neoflex.deal.repository.ApplicationStatusHistoryRepository;
-import com.neoflex.deal.models.Client;
-import com.neoflex.deal.repository.ClientRepository;
-import com.neoflex.deal.models.Credit;
 import com.neoflex.deal.repository.CreditRepository;
 import com.neoflex.deal.models.Employment;
 import com.neoflex.deal.repository.EmploymentRepository;
-import com.neoflex.deal.models.Passport;
-import com.neoflex.deal.repository.PassportRepository;
 import com.neoflex.deal.models.PaymentSchedule;
 import com.neoflex.deal.repository.PaymentScheduleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -35,56 +26,29 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class DealServiceImpl implements DealService {
 
-    @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private PassportRepository passportRepository;
-    @Autowired
-    private ApplicationRepository applicationRepository;
-    @Autowired
-    private CreditRepository creditRepository;
-    @Autowired
-    private AddServicesRepository addServesRepository;
-    @Autowired
-    private EmploymentRepository employmentRepository;
-    @Autowired
-    private ApplicationStatusHistoryRepository applicationStatusHistoryRepository;
-    @Autowired
-    private PaymentScheduleRepository paymentScheduleRepository;
+    private final ApplicationRepository applicationRepository;
+    private final CreditRepository creditRepository;
+    private final AddServicesRepository addServesRepository;
+    private final EmploymentRepository employmentRepository;
+    private final ApplicationStatusHistoryRepository applicationStatusHistoryRepository;
+    private final PaymentScheduleRepository paymentScheduleRepository;
 
-//    public DealServiceImpl(@Autowired ClientRepository clientRepository,
-//                           @Autowired PassportRepository passportRepository,
-//                           @Autowired ApplicationRepository applicationRepository,
-//                           @Autowired CreditRepository creditRepository,
-//                           @Autowired Add_serivesRepository addServesRepository,
-//                           @Autowired EmploymentRepository employmentRepository,
-//                           @Autowired ApplicationStatusHistoryRepository applicationStatusHistoryRepository,
-//                           @Autowired PaymentScheduleRepository paymentScheduleRepository) {
-//        this.clientRepository = clientRepository;
-//        this.passportRepository = passportRepository;
-//        this.applicationRepository = applicationRepository;
-//        this.creditRepository = creditRepository;
-//        this.addServesRepository = addServesRepository;
-//        this.employmentRepository = employmentRepository;
-//        this.applicationStatusHistoryRepository = applicationStatusHistoryRepository;
-//        this.paymentScheduleRepository = paymentScheduleRepository;
-//    }
+    @Autowired
+    ApplicationServiceImpl applicationServiceImpl;
 
-
-    @Override
-    public Long addClient(LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        log.info("addClient() - Long: Добавление клиента");
-        Application application = saveApplication(saveClient(loanApplicationRequestDTO, savePassport(loanApplicationRequestDTO)), Status.PREAPPROVAL);
-        return application.getId();
-    }
-    @Override
-    public void addOffer(LoanOfferDTO loanOfferDTO) {
-        Application application = getApplication(loanOfferDTO.getApplicationId());
-        application.setCredit(addCredit(loanOfferDTO, addAddServices(loanOfferDTO)));
-        application.setAppliedOffer(loanOfferDTO.getApplicationId());
-        application.setSignDate(LocalDate.now());
-        applicationRepository.save(application);
-        log.info("addOffer() - void: Информация о выбранном офере добавлена в базу данных");
+    @Autowired
+    public DealServiceImpl(ApplicationRepository applicationRepository,
+                           CreditRepository creditRepository,
+                           AddServicesRepository addServesRepository,
+                           EmploymentRepository employmentRepository,
+                           ApplicationStatusHistoryRepository applicationStatusHistoryRepository,
+                           PaymentScheduleRepository paymentScheduleRepository) {
+        this.applicationRepository = applicationRepository;
+        this.creditRepository = creditRepository;
+        this.addServesRepository = addServesRepository;
+        this.employmentRepository = employmentRepository;
+        this.applicationStatusHistoryRepository = applicationStatusHistoryRepository;
+        this.paymentScheduleRepository = paymentScheduleRepository;
     }
 
     @Override
@@ -98,7 +62,7 @@ public class DealServiceImpl implements DealService {
         application.getClient().getPassport().setIssueBranch(finishRegistrationRequestDTO.getPassportIssueBrach());
         application.getClient().setEmployment(saveEmployment(finishRegistrationRequestDTO));
         application.getClient().setAccount(finishRegistrationRequestDTO.getAccount());
-        updateApplication(application);
+        applicationServiceImpl.updateApplication(application);
         log.info("createScoringDataDTO() - ScoringDataDTO: Информация о Application обновлена в БД");
 
         return ScoringDataDTO.builder()
@@ -172,28 +136,6 @@ public class DealServiceImpl implements DealService {
         log.info("updateApplication() - void: Информация о Application обновлена в БД");
     }
 
-    public void updateApplication(Application application) {
-        applicationRepository.save(application);
-        log.info("updateApplication() - void: Информация о Application обновлена в БД");
-    }
-
-    public Passport savePassport(LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        Passport passport = new Passport(loanApplicationRequestDTO.getPassportSeries(), loanApplicationRequestDTO.getPassportNumber());
-        log.info("savePassport() - Passport: Информация о Passport добавлена в БД");
-        return passportRepository.save(passport);
-    }
-
-    public Client saveClient(LoanApplicationRequestDTO loanApplicationRequestDTO, Passport passport) {
-        log.info("saveClient() - Client: Информация о Client добавлена в БД");
-        return clientRepository.save(Client.builder()
-                .lastName(loanApplicationRequestDTO.getLastName())
-                .firstName(loanApplicationRequestDTO.getFirstName())
-                .middleName(loanApplicationRequestDTO.getMiddleName())
-                .birthdate(loanApplicationRequestDTO.getBirthdate())
-                .email(loanApplicationRequestDTO.getEmail())
-                .passport(passport)
-                .build());
-    }
 
     public Employment saveEmployment(FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
         log.info("saveEmployment() - Employment: Информация о Employment добавлена в БД");
@@ -215,34 +157,53 @@ public class DealServiceImpl implements DealService {
                 .build());
     }
 
-    public Application saveApplication(Client client, Status status) {
-        log.info("saveApplication() - Long: Информация о Application добавлена в БД");
-        return applicationRepository.save(Application.builder()
-                .client(client)
-                .creationDate(LocalDate.now())
-                .status(status)
-                .statusHistory(Arrays.asList(addApplicationStatusHistory(status)))
-                .build());
-    }
 
-    public AddServices addAddServices(LoanOfferDTO loanOfferDTO) {
-        log.info("addAddServices() - AddServices: Информация о Add_services добавлена в БД");
-        return addServesRepository.save(AddServices.builder()
-                .isInsuranceEnabled(loanOfferDTO.getIsInsuranceEnabled())
-                .isSalaryClient(loanOfferDTO.getIsSalaryClient())
-                .build());
-    }
+//    public Passport savePassport(LoanApplicationRequestDTO loanApplicationRequestDTO) {
+//        Passport passport = new Passport(loanApplicationRequestDTO.getPassportSeries(), loanApplicationRequestDTO.getPassportNumber());
+//        log.info("savePassport() - Passport: Информация о Passport добавлена в БД");
+//        return passportRepository.save(passport);
+//    }
+//
+//    public Client saveClient(LoanApplicationRequestDTO loanApplicationRequestDTO, Passport passport) {
+//        log.info("saveClient() - Client: Информация о Client добавлена в БД");
+//        return clientRepository.save(Client.builder()
+//                .lastName(loanApplicationRequestDTO.getLastName())
+//                .firstName(loanApplicationRequestDTO.getFirstName())
+//                .middleName(loanApplicationRequestDTO.getMiddleName())
+//                .birthdate(loanApplicationRequestDTO.getBirthdate())
+//                .email(loanApplicationRequestDTO.getEmail())
+//                .passport(passport)
+//                .build());
+//    }
 
-    public Credit addCredit(LoanOfferDTO loanOfferDTO, AddServices addServices) {
-        log.info("addCredit() - Credit: Информация о Credit добавлена в БД");
-        return creditRepository.save(Credit.builder()
-                .amount(loanOfferDTO.getRequestedAmount())
-                .term(loanOfferDTO.getTerm())
-                .monthlyPayment(loanOfferDTO.getMonthlyPayment())
-                .rate(loanOfferDTO.getRate())
-                .psk(loanOfferDTO.getTotalAmount())
-                .addServices(addServices)
-                .creditStatus(CreditStatus.CALCULATED)
-                .build());
-    }
+//    public Application saveApplication(Client client, Status status) {
+//        log.info("saveApplication() - Long: Информация о Application добавлена в БД");
+//        return applicationRepository.save(Application.builder()
+//                .client(client)
+//                .creationDate(LocalDate.now())
+//                .status(status)
+//                .statusHistory(Arrays.asList(addApplicationStatusHistory(status)))
+//                .build());
+//    }
+
+//    public AddServices addAddServices(LoanOfferDTO loanOfferDTO) {
+//        log.info("addAddServices() - AddServices: Информация о Add_services добавлена в БД");
+//        return addServesRepository.save(AddServices.builder()
+//                .isInsuranceEnabled(loanOfferDTO.getIsInsuranceEnabled())
+//                .isSalaryClient(loanOfferDTO.getIsSalaryClient())
+//                .build());
+//    }
+//
+//    public Credit addCredit(LoanOfferDTO loanOfferDTO, AddServices addServices) {
+//        log.info("addCredit() - Credit: Информация о Credit добавлена в БД");
+//        return creditRepository.save(Credit.builder()
+//                .amount(loanOfferDTO.getRequestedAmount())
+//                .term(loanOfferDTO.getTerm())
+//                .monthlyPayment(loanOfferDTO.getMonthlyPayment())
+//                .rate(loanOfferDTO.getRate())
+//                .psk(loanOfferDTO.getTotalAmount())
+//                .addServices(addServices)
+//                .creditStatus(CreditStatus.CALCULATED)
+//                .build());
+//    }
 }

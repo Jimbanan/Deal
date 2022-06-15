@@ -12,10 +12,6 @@ import com.neoflex.deal.models.Passport;
 
 public interface DealService {
 
-    Long addClient(LoanApplicationRequestDTO loanApplicationRequestDTO);
-
-    void addOffer(LoanOfferDTO loanOfferDTO);
-
     ScoringDataDTO createScoringDataDTO(FinishRegistrationRequestDTO finishRegistrationRequestDTO, Long applicationId);
 
     void updateCredit(CreditDTO creditDTO, Long applicationId);
@@ -24,21 +20,9 @@ public interface DealService {
 
     void updateApplication(Application application, Status status);
 
-    void updateApplication(Application application);
-
-    Passport savePassport(LoanApplicationRequestDTO loanApplicationRequestDTO);
-
-    Client saveClient(LoanApplicationRequestDTO loanApplicationRequestDTO, Passport passport);
-
     Employment saveEmployment(FinishRegistrationRequestDTO finishRegistrationRequestDTO);
 
     ApplicationStatusHistory addApplicationStatusHistory(Status status);
-
-    Application saveApplication(Client client, Status status);
-
-    AddServices addAddServices(LoanOfferDTO loanOfferDTO);
-
-    Credit addCredit(LoanOfferDTO loanOfferDTO, AddServices addServices);
 
 
 }
