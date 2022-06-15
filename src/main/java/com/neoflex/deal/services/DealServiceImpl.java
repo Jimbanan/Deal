@@ -1,10 +1,10 @@
 package com.neoflex.deal.services;
 
 import com.neoflex.deal.dto.*;
-import com.neoflex.deal.enums.Credit_status;
+import com.neoflex.deal.enums.CreditStatus;
 import com.neoflex.deal.enums.Status;
-import com.neoflex.deal.models.add_services.Add_serivesRepository;
-import com.neoflex.deal.models.add_services.Add_services;
+import com.neoflex.deal.models.add_services.AddServicesRepository;
+import com.neoflex.deal.models.add_services.AddServices;
 import com.neoflex.deal.models.application.Application;
 import com.neoflex.deal.models.application.ApplicationRepository;
 import com.neoflex.deal.models.applicationStatusHistory.ApplicationStatusHistory;
@@ -44,7 +44,7 @@ public class DealServiceImpl implements DealService {
     @Autowired
     private CreditRepository creditRepository;
     @Autowired
-    private Add_serivesRepository addServesRepository;
+    private AddServicesRepository addServesRepository;
     @Autowired
     private EmploymentRepository employmentRepository;
     @Autowired
@@ -226,15 +226,15 @@ public class DealServiceImpl implements DealService {
                 .build());
     }
 
-    public Add_services addAddServices(LoanOfferDTO loanOfferDTO) {
+    public AddServices addAddServices(LoanOfferDTO loanOfferDTO) {
         log.info("addAddServices() - Add_services: Информация о Add_services добавлена в БД");
-        return addServesRepository.save(Add_services.builder()
+        return addServesRepository.save(AddServices.builder()
                 .isInsuranceEnabled(loanOfferDTO.getIsInsuranceEnabled())
                 .isSalaryClient(loanOfferDTO.getIsSalaryClient())
                 .build());
     }
 
-    public Credit addCredit(LoanOfferDTO loanOfferDTO, Add_services addServices) {
+    public Credit addCredit(LoanOfferDTO loanOfferDTO, AddServices addServices) {
         log.info("addCredit() - Credit: Информация о Credit добавлена в БД");
         return creditRepository.save(Credit.builder()
                 .amount(loanOfferDTO.getRequestedAmount())
@@ -243,7 +243,7 @@ public class DealServiceImpl implements DealService {
                 .rate(loanOfferDTO.getRate())
                 .psk(loanOfferDTO.getTotalAmount())
                 .addServices(addServices)
-                .creditStatus(Credit_status.CALCULATED)
+                .creditStatus(CreditStatus.CALCULATED)
                 .build());
     }
 }

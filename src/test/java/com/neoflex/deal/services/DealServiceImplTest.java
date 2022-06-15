@@ -2,8 +2,8 @@ package com.neoflex.deal.services;//package com.neoflex.conveyor.services;
 
 import com.neoflex.deal.dto.*;
 import com.neoflex.deal.enums.*;
-import com.neoflex.deal.models.add_services.Add_serivesRepository;
-import com.neoflex.deal.models.add_services.Add_services;
+import com.neoflex.deal.models.add_services.AddServicesRepository;
+import com.neoflex.deal.models.add_services.AddServices;
 import com.neoflex.deal.models.application.Application;
 import com.neoflex.deal.models.application.ApplicationRepository;
 import com.neoflex.deal.models.applicationStatusHistory.ApplicationStatusHistoryRepository;
@@ -44,7 +44,7 @@ class DealServiceImplTest {
     @Autowired
     private CreditRepository creditRepository;
     @Autowired
-    private Add_serivesRepository addServesRepository;
+    private AddServicesRepository addServesRepository;
     @Autowired
     private EmploymentRepository employmentRepository;
     @Autowired
@@ -259,7 +259,7 @@ class DealServiceImplTest {
         ReflectionTestUtils.setField(dealService, "creditRepository", creditRepository);
         Long count = creditRepository.count();
         dealService.addCredit(LoanOfferDTO.builder().build(),
-                Add_services.builder().build());
+                AddServices.builder().build());
         Assertions.assertEquals(creditRepository.count(), count + 1);
     }
 

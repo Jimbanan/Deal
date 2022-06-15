@@ -1,7 +1,7 @@
 package com.neoflex.deal.models.credit;
 
-import com.neoflex.deal.enums.Credit_status;
-import com.neoflex.deal.models.add_services.Add_services;
+import com.neoflex.deal.enums.CreditStatus;
+import com.neoflex.deal.models.add_services.AddServices;
 import com.neoflex.deal.models.application.Application;
 import com.neoflex.deal.models.paymentSchedule.PaymentSchedule;
 import lombok.AllArgsConstructor;
@@ -42,7 +42,7 @@ public class Credit {
 
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "addServices_id", unique = true, updatable = false)
-    private Add_services addServices;// (доп услуги)
+    private AddServices addServices;// (доп услуги)
 
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "paymentSchedules_id")
@@ -50,7 +50,7 @@ public class Credit {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Credit_status creditStatus; //(Статус кредита)
+    private CreditStatus creditStatus; //(Статус кредита)
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "credit")

@@ -13,8 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "add_services")
-public class Add_services {
+@Table(name = "addServices")
+public class AddServices {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

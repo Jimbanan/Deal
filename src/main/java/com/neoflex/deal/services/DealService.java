@@ -2,7 +2,7 @@ package com.neoflex.deal.services;
 
 import com.neoflex.deal.dto.*;
 import com.neoflex.deal.enums.Status;
-import com.neoflex.deal.models.add_services.Add_services;
+import com.neoflex.deal.models.add_services.AddServices;
 import com.neoflex.deal.models.application.Application;
 import com.neoflex.deal.models.applicationStatusHistory.ApplicationStatusHistory;
 import com.neoflex.deal.models.client.Client;
@@ -36,9 +36,9 @@ public interface DealService {
 
     Application saveApplication(Client client, Status status);
 
-    Add_services addAddServices(LoanOfferDTO loanOfferDTO);
+    AddServices addAddServices(LoanOfferDTO loanOfferDTO);
 
-    Credit addCredit(LoanOfferDTO loanOfferDTO, Add_services addServices);
+    Credit addCredit(LoanOfferDTO loanOfferDTO, AddServices addServices);
 
 
 }
