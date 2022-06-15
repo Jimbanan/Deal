@@ -5,8 +5,10 @@ import com.neoflex.deal.services.DealServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -18,12 +20,15 @@ public class DealController {
     @Autowired
     DealServiceImpl dealService;
 
+    @Value("${conveyor.hostname}")
+    String hostname;
+
     @PostMapping("/application")
     @Operation(description = "Формирование списка кредитных предложение + Добавление первичных данных в БД")
     public List<LoanOfferDTO> offersDeal(@Valid @RequestBody LoanApplicationRequestDTO loanApplicationRequestDTO) {
         loanApplicationRequestDTO.setApplicationId(dealService.addClient(loanApplicationRequestDTO));
         RestTemplate restTemplate = new RestTemplate();
-        String uri_Offers = "http://localhost:8080/conveyor/offers";
+        String uri_Offers = hostname + "/conveyor/offers";
         return restTemplate.postForObject(uri_Offers, loanApplicationRequestDTO, List.class);
     }
 
@@ -39,7 +44,7 @@ public class DealController {
                           @PathVariable Long applicationId) {
         ScoringDataDTO scoringDataDTO = dealService.createScoringDataDTO(finishRegistrationRequestDTO, applicationId);
         RestTemplate restTemplate = new RestTemplate();
-        String uri_Calculate = "http://localhost:8080/conveyor/calculation";
+        String uri_Calculate = hostname + "/conveyor/calculation";
         CreditDTO creditDTO = restTemplate.postForObject(uri_Calculate, scoringDataDTO, CreditDTO.class);
         dealService.updateCredit(creditDTO, applicationId);
     }
