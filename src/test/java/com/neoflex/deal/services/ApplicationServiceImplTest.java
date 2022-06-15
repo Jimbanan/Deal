@@ -23,12 +23,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import javax.transaction.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -44,10 +38,8 @@ class ApplicationServiceImplTest {
     @InjectMocks
     private ApplicationStatusHistoryServiceImpl applicationStatusHistoryServiceImpl;
 
-
     @InjectMocks
     private ApplicationServiceImpl applicationServiceImpl;
-
 
     @Test
     void addApplication() {
@@ -118,56 +110,9 @@ class ApplicationServiceImplTest {
                 .build();
 
         application.setClient(client);
-
         applicationServiceImpl.updateApplication(application);
-
         Application applicationTest = applicationRepository.findTopByOrderByIdDesc();
-
         Assertions.assertNotNull(applicationTest.getClient().getGender());
-
     }
 
-    @Test
-    void testUpdateApplication() {
-        ReflectionTestUtils.setField(applicationStatusHistoryServiceImpl, "applicationStatusHistoryRepository", applicationStatusHistoryRepository);
-
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
-
-        Long id = applicationRepository.findTopByOrderByIdDesc().getId();
-
-//        List<PaymentSchedule> paymentSchedules = new ArrayList<>();
-//
-//        PaymentSchedule paymentSchedule = PaymentSchedule.builder()
-//                .number(1)
-//                .date(LocalDate.now())
-//                .totalPayment(BigDecimal.valueOf(10000))
-//                .interestPayment(BigDecimal.valueOf(10000))
-//                .debtPayment(BigDecimal.valueOf(10000))
-//                .remainingDebt(BigDecimal.valueOf(10000))
-//                .build();
-//
-//        paymentSchedules.add(paymentSchedule);
-//
-//        Application application = applicationServiceImpl.getApplication(id);
-//        application.setStatus(Status.DOCUMENT_SIGNED);
-//        application.getCredit().setAmount(BigDecimal.valueOf(100000));
-//        application.getCredit().setTerm(6);
-//        application.getCredit().setMonthlyPayment(BigDecimal.valueOf(100000));
-//        application.getCredit().setRate(BigDecimal.valueOf(10));
-//        application.getCredit().setPsk(BigDecimal.valueOf(10));
-//        application.getCredit().getAddServices().setIsInsuranceEnabled(true);
-//        application.getCredit().getAddServices().setIsSalaryClient(true);
-//        application.getCredit().setPaymentSchedule(paymentSchedules);
-
-        Application application = applicationRepository.findTopByOrderByIdDesc();
-
-
-        applicationServiceImpl.updateApplication(Application.builder().build(), Status.APPROVED);
-
-        Application applicationTest = applicationRepository.findTopByOrderByIdDesc();
-
-        Assertions.assertNotEquals(applicationTest, application);
-
-    }
 }
