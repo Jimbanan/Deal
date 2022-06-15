@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "application_status_history")
+@Table(name = "applicationStatusHistory")
 public class ApplicationStatusHistory {
 
     @Id

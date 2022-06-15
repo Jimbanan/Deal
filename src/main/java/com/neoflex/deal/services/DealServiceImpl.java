@@ -83,7 +83,7 @@ public class DealServiceImpl implements DealService {
         Application application = getApplication(loanOfferDTO.getApplicationId());
         application.setCredit(addCredit(loanOfferDTO, addAddServices(loanOfferDTO)));
         application.setAppliedOffer(loanOfferDTO.getApplicationId());
-        application.setSign_date(LocalDate.now());
+        application.setSignDate(LocalDate.now());
         applicationRepository.save(application);
         log.info("addOffer() - void: Информация о выбранном офере добавлена в базу данных");
     }
@@ -93,7 +93,7 @@ public class DealServiceImpl implements DealService {
 
         Application application = getApplication(applicationId);
         application.getClient().setGender(finishRegistrationRequestDTO.getGenders());
-        application.getClient().setMarital_status(finishRegistrationRequestDTO.getMaritalStatus());
+        application.getClient().setMaritalStatus(finishRegistrationRequestDTO.getMaritalStatus());
         application.getClient().setDependentAmount(finishRegistrationRequestDTO.getDependentAmount());
         application.getClient().getPassport().setPassportIssueDate(finishRegistrationRequestDTO.getPassportIssueDate());
         application.getClient().getPassport().setPassportIssueBranch(finishRegistrationRequestDTO.getPassportIssueBrach());
@@ -114,12 +114,12 @@ public class DealServiceImpl implements DealService {
                 .passportNumber(application.getClient().getPassport().getPassportNumber())
                 .passportIssueDate(application.getClient().getPassport().getPassportIssueDate())
                 .passportIssueBranch(application.getClient().getPassport().getPassportIssueBranch())
-                .maritalStatus(application.getClient().getMarital_status())
+                .maritalStatus(application.getClient().getMaritalStatus())
                 .dependentAmount(application.getClient().getDependentAmount())
                 .employment(finishRegistrationRequestDTO.getEmployment())
                 .account(application.getClient().getAccount())
-                .isInsuranceEnabled(application.getCredit().getAddServices().getIs_insurance_enabled())
-                .isSalaryClient(application.getCredit().getAddServices().getIs_salary_client())
+                .isInsuranceEnabled(application.getCredit().getAddServices().getIsInsuranceEnabled())
+                .isSalaryClient(application.getCredit().getAddServices().getIsSalaryClient())
                 .build();
     }
 
@@ -147,9 +147,9 @@ public class DealServiceImpl implements DealService {
         application.getCredit().setMonthlyPayment(creditDTO.getMonthlyPayment());
         application.getCredit().setRate(creditDTO.getRate());
         application.getCredit().setPsk(creditDTO.getPsk());
-        application.getCredit().getAddServices().setIs_insurance_enabled(creditDTO.getIsInsuranceEnabled());
-        application.getCredit().getAddServices().setIs_salary_client(creditDTO.getIsSalaryClient());
-        application.getCredit().setPayment_schedule(paymentSchedules);
+        application.getCredit().getAddServices().setIsInsuranceEnabled(creditDTO.getIsInsuranceEnabled());
+        application.getCredit().getAddServices().setIsSalaryClient(creditDTO.getIsSalaryClient());
+        application.getCredit().setPaymentSchedule(paymentSchedules);
         updateApplication(application, Status.APPROVED);
         log.info("updateCredit() - void: Информация о Application обновлена в БД");
 
@@ -166,8 +166,8 @@ public class DealServiceImpl implements DealService {
         List<ApplicationStatusHistory> list = new ArrayList<>();
         list.add(addApplicationStatusHistory(status));
 
-        application.getStatus_history().add(list.get(0));
-        log.info("updateApplication() - void: Информация о application.status_history добавлена");
+        application.getStatusHistory().add(list.get(0));
+        log.info("updateApplication() - void: Информация о application.statusHistory добавлена");
 
         applicationRepository.save(application);
         log.info("updateApplication() - void: Информация о Application обновлена в БД");
@@ -220,17 +220,17 @@ public class DealServiceImpl implements DealService {
         log.info("saveApplication() - Long: Информация о Application добавлена в БД");
         return applicationRepository.save(Application.builder()
                 .client(client)
-                .creation_date(LocalDate.now())
+                .creationDate(LocalDate.now())
                 .status(status)
-                .status_history(Arrays.asList(addApplicationStatusHistory(status)))
+                .statusHistory(Arrays.asList(addApplicationStatusHistory(status)))
                 .build());
     }
 
     public Add_services addAddServices(LoanOfferDTO loanOfferDTO) {
         log.info("addAddServices() - Add_services: Информация о Add_services добавлена в БД");
         return addServesRepository.save(Add_services.builder()
-                .is_insurance_enabled(loanOfferDTO.getIsInsuranceEnabled())
-                .is_salary_client(loanOfferDTO.getIsSalaryClient())
+                .isInsuranceEnabled(loanOfferDTO.getIsInsuranceEnabled())
+                .isSalaryClient(loanOfferDTO.getIsSalaryClient())
                 .build());
     }
 
@@ -243,7 +243,7 @@ public class DealServiceImpl implements DealService {
                 .rate(loanOfferDTO.getRate())
                 .psk(loanOfferDTO.getTotalAmount())
                 .addServices(addServices)
-                .credit_status(Credit_status.CALCULATED)
+                .creditStatus(Credit_status.CALCULATED)
                 .build());
     }
 }

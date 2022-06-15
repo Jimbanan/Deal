@@ -21,10 +21,10 @@ public class Add_services {
     private Long id;
 
     @Column
-    private Boolean is_insurance_enabled; //(Страховка включена?)
+    private Boolean isInsuranceEnabled; //(Страховка включена?)
 
     @Column
-    private Boolean is_salary_client; //(Зарплатный клиент?)
+    private Boolean isSalaryClient; //(Зарплатный клиент?)
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "addServices")

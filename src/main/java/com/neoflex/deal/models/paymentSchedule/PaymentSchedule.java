@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "payment_schedule")
+@Table(name = "paymentSchedule")
 public class PaymentSchedule {
 
     @Id

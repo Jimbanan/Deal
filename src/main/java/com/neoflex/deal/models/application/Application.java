@@ -38,23 +38,19 @@ public class Application {
     private Status status; // (Статус)
 
     @Column
-    private LocalDate creation_date; // (Дата создания)
+    private LocalDate creationDate; // (Дата создания)
 
     @Column
     private Long appliedOffer; // (Принятое предложение кредита)
 
     @Column
-    private LocalDate sign_date; // (Дата подписания)
+    private LocalDate signDate; // (Дата подписания)
 
     @Column
-    private String ses_code; // (Код ПЭП (Простая Электронная Подпись))
+    private String sesCode; // (Код ПЭП (Простая Электронная Подпись))
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(name = "application_id")
-    private List<ApplicationStatusHistory> status_history; //(История изменения статусов)
-
-    public Application(Client client) {
-        this.client = client;
-    }
+    private List<ApplicationStatusHistory> statusHistory; //(История изменения статусов)
 
 }

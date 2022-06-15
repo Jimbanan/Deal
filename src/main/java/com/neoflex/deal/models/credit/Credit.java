@@ -46,11 +46,11 @@ public class Credit {
 
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "paymentSchedules_id")
-    private List<PaymentSchedule> payment_schedule; //(График платежей)
+    private List<PaymentSchedule> paymentSchedule; //(График платежей)
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Credit_status credit_status; //(Статус кредита)
+    private Credit_status creditStatus; //(Статус кредита)
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "credit")

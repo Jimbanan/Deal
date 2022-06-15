@@ -46,7 +46,7 @@ public class Client {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private MaritalStatus marital_status;// (Семейное положение)
+    private MaritalStatus maritalStatus;// (Семейное положение)
 
     @Column
     private Integer dependentAmount;// (Количество иждивенцев)
