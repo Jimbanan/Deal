@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1655400063121-11
-      author: userv (generated)
+      id: create-application_status_history
+      author: Jimbanan
       changes:
         - createTable:
             columns:
@@ -24,8 +24,8 @@ databaseChangeLog:
                   type: BIGINT
             tableName: application_status_history
   - changeSet:
-      id: 1655400063121-19
-      author: userv (generated)
+      id: addForeignKeyConstraint-application_status_history-application
+      author: Jimbanan
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: application_id

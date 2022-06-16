@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1655400063121-2
-      author: userv (generated)
+      id: create-application
+      author: Jimbanan
       changes:
         - createTable:
             columns:
@@ -39,16 +39,16 @@ databaseChangeLog:
             tableName: application
 
   - changeSet:
-      id: 1655400063121-7
-      author: userv (generated)
+      id: addUniqueConstraint-application-credit
+      author: Jimbanan
       changes:
         - addUniqueConstraint:
             columnNames: credit_id
             constraintName: uk_r7531yxb97ji5am6qpixnaux5
             tableName: application
   - changeSet:
-      id: 1655400063121-20
-      author: userv (generated)
+      id: addForeignKeyConstraint-application-client
+      author: Jimbanan
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: client_id
@@ -62,8 +62,8 @@ databaseChangeLog:
             referencedTableName: client
             validate: true
   - changeSet:
-      id: 1655400063121-21
-      author: userv (generated)
+      id: addForeignKeyConstraint-application-credit
+      author: Jimbanan
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: credit_id

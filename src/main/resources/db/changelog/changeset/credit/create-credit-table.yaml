@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1655400063121-3
-      author: userv (generated)
+      id: create-credit
+      author: Jimbanan
       changes:
         - createTable:
             columns:
@@ -37,16 +37,16 @@ databaseChangeLog:
             tableName: credit
 
   - changeSet:
-      id: 1655400063121-8
-      author: userv (generated)
+      id: addUniqueConstraint-credit
+      author: Jimbanan
       changes:
         - addUniqueConstraint:
             columnNames: add_services_id
             constraintName: uk_cau5gvvmgv3hcbuiedcc6qs2b
             tableName: credit
   - changeSet:
-      id: 1655400063121-17
-      author: userv (generated)
+      id: addForeignKeyConstraint-credit
+      author: Jimbanan
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: add_services_id

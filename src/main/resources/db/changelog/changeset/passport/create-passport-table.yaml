@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1655400063121-13
-      author: userv (generated)
+      id: create-passport
+      author: Jimbanan
       changes:
         - createTable:
             columns:

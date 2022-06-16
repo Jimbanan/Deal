@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1655400063121-1
-      author: userv (generated)
+      id: create-client
+      author: Jimbanan
       changes:
         - createTable:
             columns:
@@ -51,8 +51,8 @@ databaseChangeLog:
             tableName: client
 
   - changeSet:
-      id: 1655400063121-4
-      author: userv (generated)
+      id: addUniqueConstraint-client-passport
+      author: Jimbanan
       changes:
         - addUniqueConstraint:
             columnNames: passport_id
@@ -60,8 +60,8 @@ databaseChangeLog:
             tableName: client
 
   - changeSet:
-      id: 1655400063121-5
-      author: userv (generated)
+      id: addUniqueConstraint-client-employment
+      author: Jimbanan
       changes:
         - addUniqueConstraint:
             columnNames: employment_id
@@ -69,8 +69,8 @@ databaseChangeLog:
             tableName: client
 
   - changeSet:
-      id: 1655400063121-15
-      author: userv (generated)
+      id: addForeignKeyConstraint-client-passport
+      author: Jimbanan
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: passport_id
@@ -84,8 +84,8 @@ databaseChangeLog:
             referencedTableName: passport
             validate: true
   - changeSet:
-      id: 1655400063121-16
-      author: userv (generated)
+      id: addForeignKeyConstraint-client-employment
+      author: Jimbanan
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: employment_id

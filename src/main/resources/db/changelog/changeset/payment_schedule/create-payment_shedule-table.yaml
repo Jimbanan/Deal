@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1655400063121-14
-      author: userv (generated)
+      id: create-payment_schedule
+      author: Jimbanan
       changes:
         - createTable:
             columns:
@@ -37,8 +37,8 @@ databaseChangeLog:
             tableName: payment_schedule
 
   - changeSet:
-      id: 1655400063121-18
-      author: userv (generated)
+      id: addForeignKeyConstraint-payment_schedule
+      author: Jimbanan
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: payment_schedules_id
