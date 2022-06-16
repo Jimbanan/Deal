@@ -1,0 +1,100 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1655400063121-1
+      author: userv (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: client_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: account
+                  type: VARCHAR(255)
+              - column:
+                  name: birthdate
+                  type: date
+              - column:
+                  name: dependent_amount
+                  type: INTEGER
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: gender
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: marital_status
+                  type: VARCHAR(255)
+              - column:
+                  name: middle_name
+                  type: VARCHAR(255)
+              - column:
+                  name: employment_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: passport_id
+                  type: BIGINT
+            tableName: client
+
+  - changeSet:
+      id: 1655400063121-4
+      author: userv (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: passport_id
+            constraintName: uk_495g35l73whlk1fdkvw2n6rkm
+            tableName: client
+
+  - changeSet:
+      id: 1655400063121-5
+      author: userv (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: employment_id
+            constraintName: uk_d23ocnqblqbapmdh78hspdjws
+            tableName: client
+
+  - changeSet:
+      id: 1655400063121-15
+      author: userv (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: passport_id
+            baseTableName: client
+            constraintName: fk12h145omp6r5ujc1typmdxixt
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: passport
+            validate: true
+  - changeSet:
+      id: 1655400063121-16
+      author: userv (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: employment_id
+            baseTableName: client
+            constraintName: fk2otva1xnql5d427cmbvh9tjh7
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: employment
+            validate: true

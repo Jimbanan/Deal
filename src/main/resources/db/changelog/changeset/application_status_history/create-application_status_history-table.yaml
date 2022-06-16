@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1655400063121-11
+      author: userv (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: application_status_history_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+              - column:
+                  name: time
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: application_id
+                  type: BIGINT
+            tableName: application_status_history
+  - changeSet:
+      id: 1655400063121-19
+      author: userv (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: application_id
+            baseTableName: application_status_history
+            constraintName: fk97cmvt5qcxq95eu8c0ba2mien
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: application
+            validate: true

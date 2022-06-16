@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1655400063121-2
+      author: userv (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: application_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: applied_offer
+                  type: BIGINT
+              - column:
+                  name: creation_date
+                  type: date
+              - column:
+                  name: ses_code
+                  type: VARCHAR(255)
+              - column:
+                  name: sign_date
+                  type: date
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: client_id
+                  type: BIGINT
+              - column:
+                  name: credit_id
+                  type: BIGINT
+            tableName: application
+
+  - changeSet:
+      id: 1655400063121-7
+      author: userv (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: credit_id
+            constraintName: uk_r7531yxb97ji5am6qpixnaux5
+            tableName: application
+  - changeSet:
+      id: 1655400063121-20
+      author: userv (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: client_id
+            baseTableName: application
+            constraintName: fksf5y1x7pt40gk6tvecgimmw7p
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: client
+            validate: true
+  - changeSet:
+      id: 1655400063121-21
+      author: userv (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: credit_id
+            baseTableName: application
+            constraintName: fktivv032krrnua6gl76ey13mjm
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: credit
+            validate: true

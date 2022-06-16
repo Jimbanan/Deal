@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1655400063121-13
+      author: userv (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: passport_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: issue_branch
+                  type: VARCHAR(255)
+              - column:
+                  name: issue_date
+                  type: date
+              - column:
+                  name: number
+                  type: VARCHAR(255)
+              - column:
+                  name: series
+                  type: VARCHAR(255)
+            tableName: passport

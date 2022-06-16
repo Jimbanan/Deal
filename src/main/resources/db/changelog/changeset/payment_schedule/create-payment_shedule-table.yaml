@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1655400063121-14
+      author: userv (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: payment_schedule_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: date
+                  type: date
+              - column:
+                  name: debt_payment
+                  type: numeric(19, 2)
+              - column:
+                  name: interest_payment
+                  type: numeric(19, 2)
+              - column:
+                  name: number
+                  type: INTEGER
+              - column:
+                  name: remaining_debt
+                  type: numeric(19, 2)
+              - column:
+                  name: total_payment
+                  type: numeric(19, 2)
+              - column:
+                  name: payment_schedules_id
+                  type: BIGINT
+            tableName: payment_schedule
+
+  - changeSet:
+      id: 1655400063121-18
+      author: userv (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: payment_schedules_id
+            baseTableName: payment_schedule
+            constraintName: fk6kpuhnc783a22ho4od110eha4
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: credit
+            validate: true
