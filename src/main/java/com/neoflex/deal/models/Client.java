@@ -12,8 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude="id")
-@EqualsAndHashCode(exclude="id")
 @Table(name = "client")
 public class Client {
 
@@ -60,5 +58,6 @@ public class Client {
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "client")
+    @ToString.Exclude
     public Application application;
 }

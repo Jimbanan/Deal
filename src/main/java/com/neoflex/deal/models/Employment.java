@@ -12,8 +12,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude="id")
-@EqualsAndHashCode(exclude="id")
 @Table(name = "employment")
 public class Employment {
 
@@ -43,6 +41,7 @@ public class Employment {
 
     //    //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "employment")
+    @ToString.Exclude
     public Client client;
 
 

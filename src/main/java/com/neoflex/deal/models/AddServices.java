@@ -9,8 +9,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude="id")
-@EqualsAndHashCode(exclude="id")
 @Table(name = "addServices")
 public class AddServices {
 
@@ -26,5 +24,6 @@ public class AddServices {
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "addServices")
+    @ToString.Exclude
     public Credit credit;
 }

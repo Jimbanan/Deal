@@ -12,8 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude="id")
-@EqualsAndHashCode(exclude="id")
 @Table(name = "credit")
 public class Credit {
 
@@ -50,5 +48,6 @@ public class Credit {
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "credit")
+    @ToString.Exclude
     public Application application;
 }
