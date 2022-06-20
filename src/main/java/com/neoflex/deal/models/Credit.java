@@ -49,5 +49,6 @@ public class Credit {
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "credit")
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Application application;
 }

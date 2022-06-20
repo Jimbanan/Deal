@@ -59,5 +59,6 @@ public class Client {
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "client")
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Application application;
 }

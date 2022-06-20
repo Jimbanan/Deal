@@ -1,6 +1,7 @@
 package com.neoflex.deal.models;
 
 import lombok.*;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,5 +38,6 @@ public class Passport {
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = CascadeType.ALL,optional = false, mappedBy = "passport")
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Client client;
 }

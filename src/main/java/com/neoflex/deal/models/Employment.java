@@ -42,6 +42,7 @@ public class Employment {
     //    //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "employment")
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Client client;
 
 

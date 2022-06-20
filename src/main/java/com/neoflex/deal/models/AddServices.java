@@ -25,5 +25,6 @@ public class AddServices {
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "addServices")
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Credit credit;
 }

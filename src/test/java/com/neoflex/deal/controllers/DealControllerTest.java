@@ -9,6 +9,7 @@ import com.neoflex.deal.enums.EmploymentStatus;
 import com.neoflex.deal.enums.Genders;
 import com.neoflex.deal.enums.MaritalStatus;
 import com.neoflex.deal.enums.Position;
+import com.neoflex.deal.models.Application;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,20 +83,20 @@ class DealControllerTest {
         mockMvc.perform(put("/deal/calculate/{applicationId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(FinishRegistrationRequestDTO.builder()
-                .genders(Genders.MALE)
-                .maritalStatus(MaritalStatus.MARRIED)
-                .dependentAmount(1)
-                .passportIssueDate(LocalDate.of(2002, 9, 29))
-                .passportIssueBrach("ТЕСТ")
-                .employment(EmploymentDTO.builder()
-                        .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                        .employerINN("121212")
-                        .salary(BigDecimal.valueOf(10000))
-                        .position(Position.TOP_MANAGER)
-                        .workExperienceTotal(30)
-                        .workExperienceCurrent(5).build())
-                .account("132131241241234124")
-                .build())))
+                                .genders(Genders.MALE)
+                                .maritalStatus(MaritalStatus.MARRIED)
+                                .dependentAmount(1)
+                                .passportIssueDate(LocalDate.of(2002, 9, 29))
+                                .passportIssueBrach("ТЕСТ")
+                                .employment(EmploymentDTO.builder()
+                                        .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                        .employerINN("121212")
+                                        .salary(BigDecimal.valueOf(10000))
+                                        .position(Position.TOP_MANAGER)
+                                        .workExperienceTotal(30)
+                                        .workExperienceCurrent(5).build())
+                                .account("132131241241234124")
+                                .build())))
                 .andExpect(status().isOk());
     }
 }
