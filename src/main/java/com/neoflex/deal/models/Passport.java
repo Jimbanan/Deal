@@ -1,18 +1,17 @@
 package com.neoflex.deal.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@ToString(exclude="id")
+@EqualsAndHashCode(exclude="id")
 @Table(name = "passport")
 public class Passport {
 

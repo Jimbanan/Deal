@@ -1,9 +1,6 @@
 package com.neoflex.deal.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,6 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude="id")
+@EqualsAndHashCode(exclude="id")
 @Table(name = "paymentSchedule")
 public class PaymentSchedule {
 
