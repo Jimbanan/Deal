@@ -1,12 +1,8 @@
-package com.neoflex.deal.models.employment;
+package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.EmploymentStatus;
 import com.neoflex.deal.enums.Position;
-import com.neoflex.deal.models.client.Client;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,7 +16,7 @@ import java.math.BigDecimal;
 public class Employment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -31,7 +27,7 @@ public class Employment {
     private BigDecimal salary;// (зарплата)
 
     @Column
-    private String EmployerINN;
+    private String employerINN;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -45,6 +41,8 @@ public class Employment {
 
     //    //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "employment")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Client client;
 
 

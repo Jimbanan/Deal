@@ -1,6 +1,6 @@
 package com.neoflex.deal.enums;
 
-public enum Credit_status {
+public enum CreditStatus {
     CALCULATED,
-    USSUED
+    ISSUED
 }

@@ -1,13 +1,7 @@
-package com.neoflex.deal.models.credit;
+package com.neoflex.deal.models;
 
-import com.neoflex.deal.enums.Credit_status;
-import com.neoflex.deal.models.add_services.Add_services;
-import com.neoflex.deal.models.application.Application;
-import com.neoflex.deal.models.paymentSchedule.PaymentSchedule;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.neoflex.deal.enums.CreditStatus;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -22,7 +16,7 @@ import java.util.List;
 public class Credit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -42,17 +36,19 @@ public class Credit {
 
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "addServices_id", unique = true, updatable = false)
-    private Add_services addServices;// (доп услуги)
+    private AddServices addServices;// (доп услуги)
 
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "paymentSchedules_id")
-    private List<PaymentSchedule> payment_schedule; //(График платежей)
+    private List<PaymentSchedule> paymentSchedule; //(График платежей)
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Credit_status credit_status; //(Статус кредита)
+    private CreditStatus creditStatus; //(Статус кредита)
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "credit")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Application application;
 }

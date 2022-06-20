@@ -1,14 +1,8 @@
-package com.neoflex.deal.models.client;
+package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.Genders;
 import com.neoflex.deal.enums.MaritalStatus;
-import com.neoflex.deal.models.application.Application;
-import com.neoflex.deal.models.employment.Employment;
-import com.neoflex.deal.models.passport.Passport;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,7 +16,7 @@ import java.time.LocalDate;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -46,7 +40,7 @@ public class Client {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private MaritalStatus marital_status;// (Семейное положение)
+    private MaritalStatus maritalStatus;// (Семейное положение)
 
     @Column
     private Integer dependentAmount;// (Количество иждивенцев)
@@ -64,5 +58,7 @@ public class Client {
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "client")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Application application;
 }

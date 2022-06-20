@@ -13,9 +13,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Schema(description = "Сущность первоначальных данных пользователя")
 public class LoanApplicationRequestDTO {
 

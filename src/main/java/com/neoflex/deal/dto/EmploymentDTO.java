@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "Сущность работника")
 public class EmploymentDTO {
 

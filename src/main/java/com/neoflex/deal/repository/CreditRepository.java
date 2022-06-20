@@ -1,11 +1,9 @@
-package com.neoflex.deal.models.credit;
+package com.neoflex.deal.repository;
 
+import com.neoflex.deal.models.Credit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CreditRepository extends JpaRepository<Credit, Long> {
-
-    Credit findTopByOrderByIdDesc();
-
 }
