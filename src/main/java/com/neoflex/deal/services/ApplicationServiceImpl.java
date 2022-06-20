@@ -80,7 +80,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .build();
 
         application.setCredit(credit);
-        application.setAppliedOffer(loanOfferDTO.getApplicationId());
+        application.setAppliedOffer(loanOfferDTO.toString());
         application.setSignDate(LocalDate.now());
 
         applicationRepository.save(application);

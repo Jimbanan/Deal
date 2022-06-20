@@ -35,7 +35,7 @@ public class Application {
     private LocalDate creationDate; // (Дата создания)
 
     @Column
-    private Long appliedOffer; // (Принятое предложение кредита)
+    private String appliedOffer; // (Принятое предложение кредита)
 
     @Column
     private LocalDate signDate; // (Дата подписания)
