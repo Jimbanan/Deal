@@ -2,11 +2,13 @@ package com.neoflex.deal.services;
 
 import com.neoflex.deal.dto.CreditDTO;
 import com.neoflex.deal.dto.PaymentScheduleElement;
+import com.neoflex.deal.enums.CreditStatus;
 import com.neoflex.deal.enums.Status;
-import com.neoflex.deal.models.Application;
+import com.neoflex.deal.models.*;
 import com.neoflex.deal.repository.ApplicationRepository;
 import com.neoflex.deal.repository.PaymentScheduleRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Transactional
 @SpringBootTest
@@ -44,8 +49,8 @@ class CreditServiceImplTest {
     @InjectMocks
     private CreditServiceImpl creditServiceImpl;
 
-    @Test
-    void updateCredit() {
+    @BeforeEach
+    void createReflection() {
         ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
         ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
 
@@ -53,7 +58,63 @@ class CreditServiceImplTest {
 
         ReflectionTestUtils.setField(creditServiceImpl, "applicationServiceImpl", applicationServiceImpl);
         ReflectionTestUtils.setField(creditServiceImpl, "paymentScheduleImpl", paymentScheduleImpl);
+        createApplication();
+    }
 
+
+    void createApplication() {
+        List<ApplicationStatusHistory> list = Arrays.asList(ApplicationStatusHistory.builder()
+                .status(Status.PREAPPROVAL)
+                .time(LocalDateTime.now())
+                .build());
+
+        List<ApplicationStatusHistory> arraylist = new ArrayList<>(list);
+
+        applicationRepository.save(Application.builder()
+                .client(Client.builder()
+                        .birthdate(LocalDate.of(1980, 9, 26))
+                        .dependentAmount(1)
+                        .email("usususu@mail.ru")
+                        .firstName("Test")
+                        .gender(null)
+                        .maritalStatus(null)
+                        .dependentAmount(null)
+                        .lastName("Test")
+                        .middleName("Test")
+                        .passport(Passport.builder()
+                                .number("123456")
+                                .series("1234")
+                                .issueDate(null)
+                                .issueBranch(null)
+                                .build())
+                        .employment(null)
+                        .account(null)
+                        .build())
+                .credit(Credit.builder()
+                        .amount(BigDecimal.valueOf(56202.00))
+                        .term(20)
+                        .monthlyPayment(BigDecimal.valueOf(3327.72))
+                        .rate(BigDecimal.valueOf(20))
+                        .psk(BigDecimal.valueOf(66554.41))
+                        .addServices(AddServices.builder()
+                                .isInsuranceEnabled(true)
+                                .isSalaryClient(true)
+                                .build())
+                        .paymentSchedule(Arrays.asList())
+                        .creditStatus(CreditStatus.CALCULATED)
+                        .build())
+                .status(Status.PREAPPROVAL)
+                .creationDate(LocalDate.now())
+                .appliedOffer(null)
+                .signDate(LocalDate.now())
+                .sesCode(null)
+                .statusHistory(arraylist)
+                .build());
+
+    }
+
+    @Test
+    void updateCredit() {
         Long countPaymentScheduleRepository = paymentScheduleRepository.count();
 
         Long id = applicationRepository.findTopByOrderByIdDesc().getId();

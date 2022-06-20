@@ -1,19 +1,17 @@
 package com.neoflex.deal.services;
 
-import com.neoflex.deal.dto.CreditDTO;
 import com.neoflex.deal.dto.LoanApplicationRequestDTO;
 import com.neoflex.deal.dto.LoanOfferDTO;
-import com.neoflex.deal.dto.PaymentScheduleElement;
 import com.neoflex.deal.enums.Genders;
 import com.neoflex.deal.enums.Status;
 import com.neoflex.deal.models.Application;
 import com.neoflex.deal.models.Client;
 import com.neoflex.deal.models.Passport;
-import com.neoflex.deal.models.PaymentSchedule;
 import com.neoflex.deal.repository.ApplicationRepository;
 import com.neoflex.deal.repository.ApplicationStatusHistoryRepository;
 import com.neoflex.deal.repository.PassportRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import javax.transaction.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Transactional
 @SpringBootTest
@@ -41,25 +40,41 @@ class ApplicationServiceImplTest {
     @InjectMocks
     private ApplicationServiceImpl applicationServiceImpl;
 
-    @Test
-    void addApplication() {
+    @BeforeEach
+    void createReflection() {
         ReflectionTestUtils.setField(applicationStatusHistoryServiceImpl, "applicationStatusHistoryRepository", applicationStatusHistoryRepository);
-
         ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
         ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
+        createApplication();
+    }
 
-        Long aLong = applicationServiceImpl.addApplication(LoanApplicationRequestDTO.builder().build());
-        Assertions.assertNotNull(aLong);
-
+    void createApplication() {
+        applicationRepository.save(Application.builder()
+                .creationDate(LocalDate.now())
+                .status(Status.PREAPPROVAL)
+                .client(Client.builder()
+                        .birthdate(LocalDate.of(1980, 9, 26))
+                        .email("usususu@mail.ru")
+                        .firstName("Test")
+                        .lastName("Test")
+                        .middleName("Test")
+                        .passport(Passport.builder()
+                                .number("123456")
+                                .series("1234")
+                                .build())
+                        .build())
+                .build());
     }
 
     @Test
+    void addApplication() {
+        Long aLong = applicationServiceImpl.addApplication(LoanApplicationRequestDTO.builder().build());
+        Assertions.assertNotNull(aLong);
+    }
+
+
+    @Test
     void addApplicationOffer() {
-        ReflectionTestUtils.setField(applicationStatusHistoryServiceImpl, "applicationStatusHistoryRepository", applicationStatusHistoryRepository);
-
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
-
         Long id = applicationRepository.findTopByOrderByIdDesc().getId();
 
         applicationServiceImpl.addApplicationOffer(LoanOfferDTO.builder().applicationId(id)
@@ -87,10 +102,6 @@ class ApplicationServiceImplTest {
 
     @Test
     void getApplication() {
-        ReflectionTestUtils.setField(applicationStatusHistoryServiceImpl, "applicationStatusHistoryRepository", applicationStatusHistoryRepository);
-
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
         Long id = applicationRepository.findTopByOrderByIdDesc().getId();
         Application application = applicationServiceImpl.getApplication(id);
         Assertions.assertNotNull(application);
@@ -98,11 +109,6 @@ class ApplicationServiceImplTest {
 
     @Test
     void updateApplication() {
-        ReflectionTestUtils.setField(applicationStatusHistoryServiceImpl, "applicationStatusHistoryRepository", applicationStatusHistoryRepository);
-
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
-
         Application application = applicationRepository.findTopByOrderByIdDesc();
         Client client = Client.builder()
                 .gender(Genders.NOT_BINARY)
