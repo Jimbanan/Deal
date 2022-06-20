@@ -2,14 +2,14 @@ package com.neoflex.deal.services;
 
 import com.neoflex.deal.dto.EmploymentDTO;
 import com.neoflex.deal.dto.FinishRegistrationRequestDTO;
-import com.neoflex.deal.enums.EmploymentStatus;
-import com.neoflex.deal.enums.Genders;
-import com.neoflex.deal.enums.MaritalStatus;
-import com.neoflex.deal.enums.Position;
+import com.neoflex.deal.dto.LoanApplicationRequestDTO;
+import com.neoflex.deal.enums.*;
+import com.neoflex.deal.models.*;
 import com.neoflex.deal.repository.ApplicationRepository;
 import com.neoflex.deal.repository.ApplicationStatusHistoryRepository;
 import com.neoflex.deal.repository.PassportRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +38,46 @@ class DealServiceImplTest {
     @InjectMocks
     private DealServiceImpl dealServiceImpl;
 
+    @BeforeEach
+    void createReflection() {
+        ReflectionTestUtils.setField(dealServiceImpl, "applicationServiceImpl", applicationServiceImpl);
+        ReflectionTestUtils.setField(applicationServiceImpl, "applicationStatusHistoryServiceImpl", applicationStatusHistoryServiceImpl);
+        ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
+        createApplication();
+    }
+
+    void createApplication() {
+        applicationRepository.save(Application.builder()
+                .creationDate(LocalDate.now())
+                .status(Status.PREAPPROVAL)
+                .client(Client.builder()
+                        .birthdate(LocalDate.of(1980, 9, 26))
+                        .email("usususu@mail.ru")
+                        .firstName("Test")
+                        .lastName("Test")
+                        .middleName("Test")
+                        .passport(Passport.builder()
+                                .number("123456")
+                                .series("1234")
+                                .build())
+                        .build())
+                .credit(Credit.builder()
+                        .amount(BigDecimal.valueOf(66000))
+                        .creditStatus(CreditStatus.CALCULATED)
+                        .monthlyPayment(BigDecimal.valueOf(3300))
+                        .psk(BigDecimal.valueOf(66000))
+                        .rate(BigDecimal.valueOf(20))
+                        .term(20)
+                        .addServices(AddServices.builder()
+                                .isInsuranceEnabled(true)
+                                .isSalaryClient(true)
+                                .build())
+                        .build())
+                .build());
+    }
 
     @Test
     void createScoringDataDTO() {
-        ReflectionTestUtils.setField(applicationServiceImpl, "applicationRepository", applicationRepository);
-
-        ReflectionTestUtils.setField(dealServiceImpl, "applicationServiceImpl", applicationServiceImpl);
-
         Assertions.assertNotNull(dealServiceImpl.createScoringDataDTO(FinishRegistrationRequestDTO.builder()
                 .genders(Genders.MALE)
                 .maritalStatus(MaritalStatus.MARRIED)
