@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-credit
+      author: Jimbanan
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: credit_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: amount
+                  type: numeric(19, 2)
+              - column:
+                  name: credit_status
+                  type: VARCHAR(255)
+              - column:
+                  name: monthly_payment
+                  type: numeric(19, 2)
+              - column:
+                  name: psk
+                  type: numeric(19, 2)
+              - column:
+                  name: rate
+                  type: numeric(19, 2)
+              - column:
+                  name: term
+                  type: INTEGER
+              - column:
+                  name: add_services_id
+                  type: BIGINT
+            tableName: credit
+
+  - changeSet:
+      id: addUniqueConstraint-credit
+      author: Jimbanan
+      changes:
+        - addUniqueConstraint:
+            columnNames: add_services_id
+            constraintName: uk_cau5gvvmgv3hcbuiedcc6qs2b
+            tableName: credit
+  - changeSet:
+      id: addForeignKeyConstraint-credit
+      author: Jimbanan
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: add_services_id
+            baseTableName: credit
+            constraintName: fk4rk7bs85wnbdicf6yr2g1m066
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: add_services
+            validate: true

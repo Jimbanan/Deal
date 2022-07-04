@@ -1,0 +1,25 @@
+databaseChangeLog:
+
+  - include:
+      file: db/changelog/changeset/employment/create-employment-table.yaml
+
+  - include:
+      file: db/changelog/changeset/passport/create-passport-table.yaml
+
+  - include:
+      file: db/changelog/changeset/add_services/create-add_services-table.yaml
+
+  - include:
+      file: db/changelog/changeset/client/create-client-table.yaml
+
+  - include:
+      file: db/changelog/changeset/credit/create-credit-table.yaml
+
+  - include:
+      file: db/changelog/changeset/payment_schedule/create-payment_shedule-table.yaml
+
+  - include:
+      file: db/changelog/changeset/application/create-application-table.yaml
+
+  - include:
+      file: db/changelog/changeset/application_status_history/create-application_status_history-table.yaml

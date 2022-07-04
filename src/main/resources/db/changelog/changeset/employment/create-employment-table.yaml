@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-employment
+      author: Jimbanan
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: employment_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: employerinn
+                  type: VARCHAR(255)
+              - column:
+                  name: employment_status
+                  type: VARCHAR(255)
+              - column:
+                  name: position
+                  type: VARCHAR(255)
+              - column:
+                  name: salary
+                  type: numeric(19, 2)
+              - column:
+                  name: work_experience_current
+                  type: INTEGER
+              - column:
+                  name: work_experience_total
+                  type: INTEGER
+            tableName: employment

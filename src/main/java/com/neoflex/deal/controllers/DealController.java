@@ -49,5 +49,4 @@ public class DealController {
         creditServiceImpl.updateCredit(creditDTO, applicationId);
     }
 
-
 }
