@@ -1,18 +1,16 @@
 package com.neoflex.deal.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "passport")
 public class Passport {
 
@@ -39,5 +37,7 @@ public class Passport {
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = CascadeType.ALL,optional = false, mappedBy = "passport")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Client client;
 }

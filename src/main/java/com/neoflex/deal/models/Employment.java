@@ -2,10 +2,7 @@ package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.EmploymentStatus;
 import com.neoflex.deal.enums.Position;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -44,6 +41,8 @@ public class Employment {
 
     //    //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "employment")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Client client;
 
 

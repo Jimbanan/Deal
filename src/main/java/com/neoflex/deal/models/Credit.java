@@ -1,10 +1,7 @@
 package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.CreditStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -51,5 +48,7 @@ public class Credit {
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "credit")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Application application;
 }

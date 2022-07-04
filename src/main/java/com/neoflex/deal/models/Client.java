@@ -2,10 +2,7 @@ package com.neoflex.deal.models;
 
 import com.neoflex.deal.enums.Genders;
 import com.neoflex.deal.enums.MaritalStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -61,5 +58,7 @@ public class Client {
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "client")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Application application;
 }

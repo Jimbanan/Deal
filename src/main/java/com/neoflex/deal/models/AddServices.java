@@ -1,9 +1,6 @@
 package com.neoflex.deal.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -27,5 +24,7 @@ public class AddServices {
 
     //------------------------------------FOREIGN ENTITIES
     @OneToOne(cascade = {CascadeType.ALL}, optional = false, mappedBy = "addServices")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     public Credit credit;
 }
