@@ -14,12 +14,12 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic createDocTopic() {
+    public NewTopic createDocumentsTopic() {
         return TopicBuilder.name("create_documents").build();
     }
 
     @Bean
-    public NewTopic sendDocTopic() {
+    public NewTopic sendDocumentsTopic() {
         return TopicBuilder.name("send_documents").build();
     }
 
@@ -34,7 +34,7 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic appDeniedTopic() {
+    public NewTopic applicationDeniedTopic() {
         return TopicBuilder.name("application_denied").build();
     }
 
