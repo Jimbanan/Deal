@@ -28,7 +28,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Long addApplication(LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        log.info("addClient() - Long: Добавление клиента");
+        log.info("addApplication() - Long: Добавление Application");
 
         Passport passport = Passport.builder()
                 .series(loanApplicationRequestDTO.getPassportSeries())
@@ -55,6 +55,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .build();
 
         applicationRepository.save(application);
+        log.info("addApplication() - Long: Application добавлен");
 
         return application.getId();
     }
@@ -83,11 +84,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setAppliedOffer(loanOfferDTO.toString());
         application.setSignDate(LocalDate.now());
 
-        Integer min = 100000;
-        Integer max = 999999;
-        Integer sesCode = (int) (Math.random() * ++max) + min;
+        int min = 100000;
+        int max = 999999;
+        int sesCode = (int) (Math.random() * ++max) + min;
+        log.info("addOffer() - void: сгенерирован sesCode: " + sesCode);
 
-        application.setSesCode(sesCode.toString());
+        application.setSesCode(Integer.toString(sesCode));
 
         applicationRepository.save(application);
         log.info("addOffer() - void: Информация о выбранном офере добавлена в базу данных");

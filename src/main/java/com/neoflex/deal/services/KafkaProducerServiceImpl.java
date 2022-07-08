@@ -29,7 +29,9 @@ public class KafkaProducerServiceImpl implements KafkaProducerService{
                 .build();
 
         String json = objectMapper.writeValueAsString(emailMessage);
+        log.info("send() - void: Сформирован json");
 
         kafkaTemplate.send(topic, json);
+        log.info("send() - void: Сообщение отправлено по следующему топику: {}", topic);
     }
 }
