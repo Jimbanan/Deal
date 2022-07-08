@@ -9,11 +9,6 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
     @Bean
-    public NewTopic testTopic() {
-        return TopicBuilder.name("test").build();
-    }
-
-    @Bean
     public NewTopic finishRegistrationTopic() {
         return TopicBuilder.name("finish-registration").build();
     }
