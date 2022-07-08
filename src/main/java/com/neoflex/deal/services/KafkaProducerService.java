@@ -20,7 +20,6 @@ public class KafkaProducerService {
     private final ApplicationService applicationService;
 
     public void send(String topic, Theme theme, Long id) throws JsonProcessingException {
-        System.out.println("ЗАШЛИ");
         Application app = applicationService.getApplication(id);
 
         EmailMessage emailMessage = EmailMessage.builder()
@@ -32,7 +31,5 @@ public class KafkaProducerService {
         String json = objectMapper.writeValueAsString(emailMessage);
 
         kafkaTemplate.send(topic, json);
-
-        System.out.println("Вышли");
     }
 }
