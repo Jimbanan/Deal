@@ -26,7 +26,6 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final ApplicationStatusHistoryServiceImpl applicationStatusHistoryServiceImpl;
 
-
     @Override
     public Long addApplication(LoanApplicationRequestDTO loanApplicationRequestDTO) {
         log.info("addClient() - Long: Добавление клиента");
@@ -62,6 +61,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void addApplicationOffer(LoanOfferDTO loanOfferDTO) {
+
         Application application = getApplication(loanOfferDTO.getApplicationId());
 
         AddServices addServices = AddServices.builder()
@@ -83,6 +83,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setAppliedOffer(loanOfferDTO.toString());
         application.setSignDate(LocalDate.now());
 
+        Integer min = 100000;
+        Integer max = 999999;
+        Integer sesCode = (int) (Math.random() * ++max) + min;
+
+        application.setSesCode(sesCode.toString());
+
         applicationRepository.save(application);
         log.info("addOffer() - void: Информация о выбранном офере добавлена в базу данных");
     }
@@ -97,6 +103,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         applicationRepository.save(application);
         log.info("updateApplication() - void: Информация о Application обновлена в БД");
     }
+
 
     @Transactional
     public void updateApplication(Application application, Status status) {
