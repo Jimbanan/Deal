@@ -9,33 +9,38 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
     @Bean
+    public NewTopic testTopic() {
+        return TopicBuilder.name("test").build();
+    }
+
+    @Bean
     public NewTopic finishRegistrationTopic() {
-        return TopicBuilder.name("finish_registration").build();
+        return TopicBuilder.name("finish-registration").build();
     }
 
     @Bean
     public NewTopic createDocumentsTopic() {
-        return TopicBuilder.name("create_documents").build();
+        return TopicBuilder.name("create-documents").build();
     }
 
     @Bean
     public NewTopic sendDocumentsTopic() {
-        return TopicBuilder.name("send_documents").build();
+        return TopicBuilder.name("send-documents").build();
     }
 
     @Bean
     public NewTopic sendSesTopic() {
-        return TopicBuilder.name("send_ses").build();
+        return TopicBuilder.name("send-ses").build();
     }
 
     @Bean
     public NewTopic creditIssuedTopic() {
-        return TopicBuilder.name("credit_issued").build();
+        return TopicBuilder.name("credit-issued").build();
     }
 
     @Bean
     public NewTopic applicationDeniedTopic() {
-        return TopicBuilder.name("application_denied").build();
+        return TopicBuilder.name("application-denied").build();
     }
 
 }
