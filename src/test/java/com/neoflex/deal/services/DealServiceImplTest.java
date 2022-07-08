@@ -83,7 +83,7 @@ class DealServiceImplTest {
                 .maritalStatus(MaritalStatus.MARRIED)
                 .dependentAmount(1)
                 .passportIssueDate(LocalDate.of(2002, 9, 29))
-                .passportIssueBrach("Улица Пушкина - Дом Колотушкина")
+                .passportIssueBranch("Улица Пушкина - Дом Колотушкина")
                 .employment(EmploymentDTO.builder()
                         .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
                         .employerINN("757838275")
