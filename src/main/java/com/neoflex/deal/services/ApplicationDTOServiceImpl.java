@@ -2,7 +2,6 @@ package com.neoflex.deal.services;
 
 import com.neoflex.deal.dto.*;
 import com.neoflex.deal.models.Application;
-import com.neoflex.deal.repository.ApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -20,10 +19,7 @@ public class ApplicationDTOServiceImpl implements ApplicationDTOService {
     private final ApplicationServiceImpl applicationServiceImpl;
 
     public ApplicationDTO getApplicationDTO(Application application) {
-//        log.info("getApplicationDTO() - ApplicationDTO: получение ApplicationDTO", applicationId);
-
-//        Application application = applicationServiceImpl.getApplication(applicationId);
-
+        log.info("getApplicationDTO() - ApplicationDTO: получение ApplicationDTO");
         List<ApplicationStatusHistoryDTO> applicationStatusHistoryDTOS = new ArrayList<>();
 
         for (int i = 0; i < application.getStatusHistory().size(); i++) {
@@ -57,21 +53,23 @@ public class ApplicationDTOServiceImpl implements ApplicationDTOService {
     }
 
     public List<ApplicationDTO> getAllApplicationDTO() {
+        log.info("getAllApplicationDTO() - List<ApplicationDTO>: получение List<ApplicationDTO>");
 
         List<ApplicationDTO> applicationDTOS = new ArrayList<>();
 
         List<Application> allApplication = applicationServiceImpl.getAllApplication();
+        log.info("getAllApplicationDTO() - List<ApplicationDTO>: получение списка всех Application в базе данных ");
 
         for (Application application : allApplication) {
+            log.info("getAllApplicationDTO() - List<ApplicationDTO>: Добавление ApplicationDTO в список applicationDTOS");
             applicationDTOS.add(getApplicationDTO(application));
         }
-
-        System.out.println(applicationDTOS);
-
+        log.info("getAllApplicationDTO() - List<ApplicationDTO>: Список ApplicationDTO создан");
         return applicationDTOS;
     }
 
     public ApplicationDTO getApplicationDTOByID(Long applicationId) {
+        log.info("getApplicationDTOByID() - ApplicationDTO: получение ApplicationDTO по ID");
         return getApplicationDTO(applicationServiceImpl.getApplication(applicationId));
     }
 
