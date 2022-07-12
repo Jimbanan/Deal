@@ -8,46 +8,22 @@ on:
       - 'develop'
 
 jobs:
-    runs-on: ubuntu-latest
-    container: node:latest
-    services:
-      # label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres:latest
-        # service environment variables
-        # `POSTGRES_HOST` is `postgres`
-        env:
-          # optional (defaults to `postgres`)
-          POSTGRES_DB: Neoflex
-          # required
-          POSTGRES_PASSWORD: admin
-          # optional (defaults to `5432`)
-          POSTGRES_PORT: 5432
-          # optional (defaults to `postgres`)
-          POSTGRES_USER: postgres
-        ports:
-          # maps tcp port 5432 on service container to the host
-          - 5432:5432
-        # set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-        # queries database with postgres client
-        - name: Query database
-          run: psql -h postgres -d postgres_db -U postgres_user -c 'SELECT 1;'
-          env:
-            # postgress password is required; alternatively, you can run:
-            # `PGPASSWORD=postgres_password psql ...`
-            PGPASSWORD: postgres_password
+  build:
+    runs-on: ubuntu-latestz
     steps:
-      - name: Install PostgreSQL client
-          run: |
-            apt-get update
-            apt-get install --yes postgresql-client
+
+      - name: Start PostgreSQL on Ubuntu
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
+      - name: Create additional user
+        run: |
+          sudo -u postgres psql --command="CREATE USER postgres PASSWORD 'admin'" --command="\du"
+      - name: Create additional database
+        run: |
+          sudo -u postgres createdb Neoflex --owner=postgres
+          PGPASSWORD=admin
+
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
