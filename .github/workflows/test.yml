@@ -11,25 +11,6 @@ on:
 
 
 jobs:
-  db:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        mode-versoon: [ 14.x ]
-    services:
-      postgres:
-        image: postgres:12-alpine
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: admin
-          POSTGRES_DB: Neoflex
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
   build:
     runs-on: ubuntu-latest
       steps:
@@ -40,9 +21,28 @@ jobs:
                 java-version: 11
             - name: Maven Verify
               run: mvn -B clean verify
-              env:
-                DATABASE_URL: postgresql://postgres:admin@localhost:5432/Neoflex
+        #              env:
+        #                DATABASE_URL: postgresql://postgres:admin@localhost:5432/Neoflex
             - name: Test Coverage
               uses: codecov/codecov-action@v1
               with:
                 token: ${{ secrets.TESTDEALMVP6 }}
+#  db:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        mode-versoon: [ 14.x ]
+#    services:
+#      postgres:
+#        image: postgres:12-alpine
+#        env:
+#          POSTGRES_USER: postgres
+#          POSTGRES_PASSWORD: admin
+#          POSTGRES_DB: Neoflex
+#        ports:
+#          - 5432:5432
+#        options: >-
+#          --health-cmd pg_isready
+#          --health-interval 10s
+#          --health-timeout 5s
+#          --health-retries 5
