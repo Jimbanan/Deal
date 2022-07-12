@@ -11,30 +11,26 @@ on:
 
 
 jobs:
+  db:
+    strategy:
+      matrix:
+        mode-versoon: [ 14.x ]
+    services:
+      postgres:
+        image: postgres:12-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: Neoflex
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
   build:
     runs-on: ubuntu-latest
-
-    db:
-      strategy:
-        matrix:
-          mode-versoon: [ 14.x ]
-      services:
-        postgres:
-          image: postgres:12-alpine
-          env:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: admin
-            POSTGRES_DB: Neoflex
-          ports:
-            - 5432:5432
-          options: >-
-            --health-cmd pg_isready
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
-
-
-
       steps:
         - uses: actions/checkout@v1
         - name: set up JDK 11
