@@ -19,15 +19,7 @@ jobs:
       - name: Create additional user
         run: |
           sudo -u postgres psql --command="CREATE USER postgres PASSWORD 'admin'" --command="\du"
-      - name: Create additional database
-        run: |
-          sudo -u postgres createdb Neoflex --owner=postgres
-          PGPASSWORD=admin
-      - name: Install PostgreSQL client
-        # ...
-      - name: Setup database
-        run: |
-          psql -h postgres -U postgres -c 'CREATE DATABASE "Neoflex";'
+
 
 
       - uses: actions/checkout@v2
