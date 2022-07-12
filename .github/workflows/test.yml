@@ -19,7 +19,9 @@ jobs:
           java-version: 11
       - name: Maven Verify
         run: mvn -B clean verify
-
+      - name: Install docker-compose
+        run: |
+          pip install docker-compose
       - name: Test Coverage
         uses: codecov/codecov-action@v1
         with:
