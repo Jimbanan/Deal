@@ -14,8 +14,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-        container: node:10.18-jessie
-
         services:
           # Label used to access the service container
           postgres:
