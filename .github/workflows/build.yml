@@ -23,6 +23,11 @@ jobs:
         run: |
           sudo -u postgres createdb Neoflex --owner=postgres
           PGPASSWORD=admin
+      - name: Install PostgreSQL client
+        # ...
+      - name: Setup database
+        run: psql -h postgres -U postgres -c 'CREATE DATABASE "Neoflex";'
+
 
       - uses: actions/checkout@v2
         with:

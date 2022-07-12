@@ -8,6 +8,7 @@ on:
     branches:
       - 'develop'
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,6 +24,12 @@ jobs:
         run: |
           sudo -u postgres createdb Neoflex --owner=postgres
           PGPASSWORD=admin
+      - name: Install PostgreSQL client
+        # ...
+      - name: Setup database
+        run: psql -h postgres -U postgres -c 'CREATE DATABASE "Neoflex";'
+        env:
+          PGPASSWORD: postgres
       - uses: actions/checkout@v1
       - name: set up JDK 11
         uses: actions/setup-java@v1
