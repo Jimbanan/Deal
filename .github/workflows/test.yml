@@ -27,7 +27,8 @@ jobs:
       - name: Install PostgreSQL client
         # ...
       - name: Setup database
-        run: psql -h postgres -U postgres -c 'CREATE DATABASE "Neoflex";'
+        run: |
+          psql -h postgres -U postgres -c 'CREATE DATABASE "Neoflex";'
         env:
           PGPASSWORD: postgres
       - uses: actions/checkout@v1
