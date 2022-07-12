@@ -14,6 +14,25 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+        container: node:10.18-jessie
+
+        services:
+          # Label used to access the service container
+          postgres:
+            # Docker Hub image
+            image: postgres
+            # Provide the password for postgres
+            env:
+              POSTGRES_USER: postgres
+              POSTGRES_PASSWORD: admin
+              POSTGRES_DB: Neoflex
+            # Set health checks to wait until postgres has started
+            options: >-
+              --health-cmd pg_isready
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 5
+
       - name: set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -32,6 +51,11 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+          POSTGRES_PORT: ${{ services.postgres.ports[5432] }}
+
           GITHUB_TOKEN: ${{ secrets.MVP6_DEAL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Jimbanan_Deal
