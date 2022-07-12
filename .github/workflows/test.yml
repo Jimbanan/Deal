@@ -11,17 +11,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    db:
+      image: postgres
+      container_name: db
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=admin
+        - POSTGRES_DB=Neoflex
+        - PGDATA=/var/lib/postgresql/data/pgdata
+      ports:
+        - "5432:5432"
+      restart: always
+
     steps:
       - uses: actions/checkout@v1
       - name: set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Maven Verify
-        run: mvn -B clean verify
       - name: Install docker-compose
         run: |
           pip install docker-compose
+      - name: Maven Verify
+        run: mvn -B clean verify
       - name: Test Coverage
         uses: codecov/codecov-action@v1
         with:
