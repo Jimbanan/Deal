@@ -9,26 +9,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latestz
+    runs-on: ubuntu-latest
     steps:
-
-      - name: Start PostgreSQL on Ubuntu
-        run: |
-          sudo systemctl start postgresql.service
-          pg_isready
-      - name: Create additional user
-        run: |
-          sudo -u postgres psql --command="CREATE USER postgres PASSWORD 'admin'" --command="\du"
-
-
-
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: set up JDK 17
+      - name: set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: 17
+          java-version: 11
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -43,6 +32,6 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.MVP6_GATEWAY }}
+          GITHUB_TOKEN: ${{ secrets.MVP6_DEAL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Jimbanan_Conveyor
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Jimbanan_DEAL
