@@ -9,29 +9,46 @@ on:
       - 'develop'
 
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Start PostgreSQL on Ubuntu
-        run: |
-          sudo systemctl start postgresql.service
-          pg_isready
-      - name: Create additional user
-        run: |
-          sudo -u postgres psql --command="CREATE USER postgres PASSWORD 'admin'" --command="\du"
-      - name: Create additional database
+
+    setup-postgresql-ubuntu:
+      if: true # false to skip job during debug
+      name: Setup PostgreSQL on Ubuntu
+      steps:
+        - name: Start PostgreSQL on Ubuntu
+          run: |
+            sudo systemctl start postgresql.service
+            pg_isready
+        - name: Create scheduler user
+          run: |
+            sudo -u postgres psql --command="CREATE USER postgres PASSWORD 'admin'" --command="\du"
+        - name: Create timetable database
+          run: |
+            sudo -u postgres createdb --owner=Neoflex timetable
+            PGPASSWORD=admin psql --username=postgres --host=localhost --list timetable
+
+        #    steps:
+        #      - name: Start PostgreSQL on Ubuntu
+        #        run: |
+        #          sudo systemctl start postgresql.service
+        #          pg_isready
+        #      - name: Create additional user
+        #        run: |
+        #          sudo -u postgres psql --command="CREATE USER postgres PASSWORD 'admin'" --command="\du"
 
 
-      - uses: actions/checkout@v1
-      - name: set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Maven Verify
-        run: mvn -B clean verify
+        - uses: actions/checkout@v1
+        - name: set up JDK 11
+          uses: actions/setup-java@v1
+          with:
+            java-version: 11
+        - name: Maven Verify
+          run: mvn -B clean verify
 
-      - name: Test Coverage
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.TESTDEALMVP6 }}
+        - name: Test Coverage
+          uses: codecov/codecov-action@v1
+          with:
+            token: ${{ secrets.TESTDEALMVP6 }}
