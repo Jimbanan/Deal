@@ -7,7 +7,6 @@ import com.neoflex.deal.models.*;
 import com.neoflex.deal.repository.ApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,6 +21,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
     private final ApplicationStatusHistoryServiceImpl applicationStatusHistoryServiceImpl;
+    private final Random random = new Random();
 
     @Override
     public Long addApplication(LoanApplicationRequestDTO loanApplicationRequestDTO) {
@@ -84,7 +84,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         int min = 100000;
         int max = 999999;
 
-        Random random = new Random();
         int sesCode = random.nextInt(max - min) + min;
 
         log.info("addOffer() - void: сгенерирован sesCode: " + sesCode);
