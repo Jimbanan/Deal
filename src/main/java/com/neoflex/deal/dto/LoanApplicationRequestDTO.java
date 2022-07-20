@@ -39,7 +39,7 @@ public class LoanApplicationRequestDTO {
     private String middleName;
 
     @NotNull
-    @Pattern(regexp = "^[\\w-.]{2,50}@([\\w-]+\\.)+[\\w-]{2,20}")
+    @Pattern(regexp = "^[\\w-.]{2,50}@([\\w-]+.)+[\\w-]{2,20}")
     private String email;
 
     @NotNull
