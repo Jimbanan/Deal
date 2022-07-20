@@ -1,13 +1,13 @@
 package com.neoflex.deal.services;
 
-import com.neoflex.deal.dto.LoanApplicationRequestDTO;
-import com.neoflex.deal.dto.LoanOfferDTO;
+import com.neoflex.deal.dto.*;
 import com.neoflex.deal.enums.CreditStatus;
 import com.neoflex.deal.enums.Status;
 import com.neoflex.deal.models.*;
 import com.neoflex.deal.repository.ApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -101,6 +101,11 @@ public class ApplicationServiceImpl implements ApplicationService {
                 -> new NoSuchElementException("with id='" + applicationId + "' does not exist"));
     }
 
+    public List<Application> getAllApplication() {
+        log.info("getAllApplication() - List<Application>: запрос для получения всех заявок");
+        return applicationRepository.findAll();
+    }
+
     public void updateApplication(Application application) {
         applicationRepository.save(application);
         log.info("updateApplication() - void: Информация о Application обновлена в БД");
@@ -118,5 +123,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         applicationRepository.save(application);
         log.info("updateApplication() - void: Информация о Application обновлена в БД");
     }
+
 
 }

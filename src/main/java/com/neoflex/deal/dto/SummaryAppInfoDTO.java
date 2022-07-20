@@ -1,7 +1,5 @@
 package com.neoflex.deal.dto;
 
-
-import com.neoflex.deal.models.Employment;
 import lombok.Builder;
 import lombok.Data;
 

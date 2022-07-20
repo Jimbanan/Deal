@@ -25,17 +25,20 @@ public class DealController {
     private final CreditServiceImpl creditServiceImpl;
     private final KafkaProducerServiceImpl kafkaProducerServiceImpl;
     private final SummaryAppInfoServiceImpl summaryAppInfoServiceImpl;
+    private final ApplicationDTOServiceImpl applicationDTOService;
 
     public DealController(DealServiceImpl dealService,
                           ApplicationServiceImpl applicationService,
                           CreditServiceImpl creditServiceImpl,
                           KafkaProducerServiceImpl kafkaProducerServiceImpl,
-                          SummaryAppInfoServiceImpl summaryAppInfoServiceImpl) {
+                          SummaryAppInfoServiceImpl summaryAppInfoServiceImpl,
+                          ApplicationDTOServiceImpl applicationDTOService) {
         this.dealService = dealService;
         this.applicationService = applicationService;
         this.creditServiceImpl = creditServiceImpl;
         this.kafkaProducerServiceImpl = kafkaProducerServiceImpl;
         this.summaryAppInfoServiceImpl = summaryAppInfoServiceImpl;
+        this.applicationDTOService = applicationDTOService;
     }
 
     @PostMapping("/application")
@@ -107,7 +110,6 @@ public class DealController {
 
     }
 
-
     @PostMapping("/application/{applicationId}")
     @Operation(description = "DossierMC)")
     public ResponseEntity<SummaryAppInfoDTO> getApplication(@PathVariable Long applicationId) {
@@ -115,5 +117,19 @@ public class DealController {
         SummaryAppInfoDTO summaryAppInfoDTO = summaryAppInfoServiceImpl.getSummaryAppInfo(applicationId);
         log.info("getApplication() - ResponseEntity<SummaryAppInfoDTO>: SummaryAppInfoDTO создан");
         return new ResponseEntity<>(summaryAppInfoDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/application/{applicationId}")
+    @Operation(description = "Получение заявки по id")
+    public ResponseEntity<ApplicationDTO> getOffersByID(@PathVariable Long applicationId) {
+        log.info("getOffersByID() - ResponseEntity<ApplicationDTO>: Получение ApplicationDTO по ID");
+        return new ResponseEntity<>(applicationDTOService.getApplicationDTOByID(applicationId), HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/application")
+    @Operation(description = "Получение всех заявок")
+    public ResponseEntity<List<ApplicationDTO>> getAllOffers() {
+        log.info("getAllOffers() - ResponseEntity<List<ApplicationDTO>>: Получение всех ApplicationDTO");
+        return new ResponseEntity<>(applicationDTOService.getAllApplicationDTO(), HttpStatus.OK);
     }
 }
