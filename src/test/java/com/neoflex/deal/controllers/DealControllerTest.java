@@ -87,7 +87,7 @@ class DealControllerTest {
                                 .maritalStatus(MaritalStatus.MARRIED)
                                 .dependentAmount(1)
                                 .passportIssueDate(LocalDate.of(2002, 9, 29))
-                                .passportIssueBrach("ТЕСТ")
+                                .passportIssueBranch("ТЕСТ")
                                 .employment(EmploymentDTO.builder()
                                         .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
                                         .employerINN("121212")

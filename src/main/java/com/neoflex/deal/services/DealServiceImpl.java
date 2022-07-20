@@ -41,7 +41,7 @@ public class DealServiceImpl implements DealService {
         application.getClient().setMaritalStatus(finishRegistrationRequestDTO.getMaritalStatus());
         application.getClient().setDependentAmount(finishRegistrationRequestDTO.getDependentAmount());
         application.getClient().getPassport().setIssueDate(finishRegistrationRequestDTO.getPassportIssueDate());
-        application.getClient().getPassport().setIssueBranch(finishRegistrationRequestDTO.getPassportIssueBrach());
+        application.getClient().getPassport().setIssueBranch(finishRegistrationRequestDTO.getPassportIssueBranch());
         application.getClient().setEmployment(employment);
         application.getClient().setAccount(finishRegistrationRequestDTO.getAccount());
         applicationServiceImpl.updateApplication(application);
