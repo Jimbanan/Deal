@@ -1,7 +1,6 @@
 package com.neoflex.deal.models;
 
 import lombok.*;
-import org.apache.commons.lang3.builder.HashCodeExclude;
 
 import javax.persistence.*;
 import java.time.LocalDate;

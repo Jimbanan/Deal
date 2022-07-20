@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -86,7 +83,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         int min = 100000;
         int max = 999999;
-        int sesCode = (int) (Math.random() * ++max) + min;
+
+        Random random = new Random();
+        int sesCode = random.nextInt(max - min) + min;
+
         log.info("addOffer() - void: сгенерирован sesCode: " + sesCode);
 
         application.setSesCode(Integer.toString(sesCode));

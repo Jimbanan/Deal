@@ -15,11 +15,4 @@ public class DealApplication {
         SpringApplication.run(DealApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate){
-        return args -> {
-            kafkaTemplate.send("test", "hello kafka");
-        };
-    }
-
 }

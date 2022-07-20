@@ -140,7 +140,7 @@ class CreditServiceImplTest {
         Application application = applicationServiceImpl.getApplication(id);
 
         Assertions.assertEquals(application.getId(), id);
-        Assertions.assertEquals(application.getStatus(), Status.APPROVED);
+        Assertions.assertEquals(Status.APPROVED, application.getStatus());
 
     }
 }

@@ -22,8 +22,6 @@ public class CreditServiceImpl implements CreditService {
     @Override
     public void updateCredit(CreditDTO creditDTO, Long applicationId) {
 
-        System.out.println(creditDTO);
-
         List<PaymentSchedule> paymentSchedules = new ArrayList<>();
         log.info("updateCredit() - void:  List<PaymentSchedule> paymentSchedules - Создан");
 

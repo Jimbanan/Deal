@@ -2,13 +2,9 @@ package com.neoflex.deal.dto;
 
 import com.neoflex.deal.enums.Genders;
 import com.neoflex.deal.enums.MaritalStatus;
-import com.neoflex.deal.models.Application;
-import com.neoflex.deal.models.Employment;
-import com.neoflex.deal.models.Passport;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
